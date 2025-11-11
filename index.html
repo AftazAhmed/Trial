@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Class 9 - Biology Education Platform</title>
+<style>
+  * { box-sizing: border-box; }
+  
+  body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb;
+    color: #1f2937;
+    overflow-x: hidden;
+    font-size: 14.04px;
+  }
+  
+  /* AUTH SCREEN */
+  #authScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .auth-container {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+  }
+  
+  .auth-container h1 {
+    color: #023047;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 900;
+  }
+  
+  .auth-container p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+  
+  .google-signin-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .google-signin-btn:hover {
+    border-color: #4285f4;
+    box-shadow: 0 4px 16px rgba(66,133,244,0.4);
+    transform: translateY(-2px);
+  }
+  
+  .google-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .error-message, .success-message {
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .error-message {
+    background: #ffebee;
+    color: #c62828;
+  }
+  
+  .success-message {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .user-info {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+  }
+  
+  .user-info img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  
+  .user-info span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #023047;
+  }
+  
+  .logout-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .logout-btn:hover {
+    background: #b91c1c;
+  }
+  
+  #mainApp {
+    display: none;
+    padding: 16px 8px;
+  }
+  
+  /* HEADER */
+  .header {
+    text-align: center;
+    background-color: #023047;
+    color: #ffb347;
+    padding: 32px 16px 24px 16px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, #4f59b0 0%, transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  
+  .header h1 {
+    position: relative;
+    margin: 0 0 8px 0;
+    font-size: 2.7rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #ffa726;
+  }
+  
+  .header .subtitle {
+    position: relative;
+    font-size: 17.28px;
+    font-weight: 600;
+    color: #b9fbc0;
+    letter-spacing: 0.6px;
+  }
+  
+  .pdf-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(238, 90, 111, 0.4);
+    transition: all 0.3s;
+    z-index: 100;
+  }
+  
+  .pdf-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(238, 90, 111, 0.6);
+  }
+  
+  /* PDF VIEWER */
+  .pdf-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
+  }
+  
+  .pdf-backdrop.show {
+    display: block;
+  }
+  
+  .pdf-viewer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 90%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+  }
+  
+  .pdf-viewer.show {
+    display: flex;
+  }
+  
+  .pdf-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pdf-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .pdf-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .pdf-control-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pdf-control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .pdf-iframe-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .pdf-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .pdf-viewer.minimized {
+    width: 50%;
+    height: 60%;
+  }
+  
+  .pdf-viewer.maximized {
+    width: 95%;
+    height: 95%;
+  }
+  
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dropdown-group {
+    min-width: 140px;
+    flex: 1;
+  }
+  
+  label {
+    display: block;
+    font-weight: 700;
+    font-size: 14.04px;
+    margin-bottom: 5px;
+    color: #344e41;
+  }
+  
+  select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 2px solid #028090;
+    font-size: 14.04px;
+    background-color: #ffffff;
+    color: #023047;
+    transition: 0.3s;
+  }
+  
+  select:focus {
+    outline: none;
+    border-color: #023047;
+    background-color: #e0f7f4;
+  }
+  
+  .reload-btn {
+    cursor: pointer;
+    background-color: #8b5cf6;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12.96px;
+    height: 34px;
+    transition: all 0.3s;
+  }
+  
+  .reload-btn:hover {
+    background-color: #7c3aed;
+  }
+  
+  /* VIEW TOGGLE */
+  .view-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .view-btn {
+    padding: 8px 16px;
+    border: 2px solid #028090;
+    background: white;
+    color: #023047;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14.04px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .view-btn:hover, .view-btn.active {
+    background: #028090;
+    color: white;
+  }
+  
+  /* MCQ STYLES */
+  .mcq-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .score-display {
+    background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 17.28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .reset-score-btn {
+    background: #ff9800;
+    color: #000000;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.96px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .question-item {
+    background-color: #fff8f0;
+    border-radius: 8px;
+    border: 1.5px solid #f0c49c;
+    margin-bottom: 20px;
+    padding: 16px;
+  }
+  
+  .question-text {
+    font-weight: 600;
+    font-size: 14.04px;
+    color: #255c4d;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  
+  .option {
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1.8px solid #b5d0c8;
+    padding: 10px 14px;
+    margin: 6px 0;
+    font-weight: 500;
+    font-size: 14.04px;
+    color: #244636;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  
+  .option:hover:not(.selected) {
+    background-color: #e8f5f1;
+    border-color: #71b280;
+  }
+  
+  .option.selected.correct {
+    background-color: #d4edda;
+    border-color: #28a745;
+  }
+  
+  .option.selected.wrong {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+  }
+  
+  /* NOTES STYLES */
+  .notes-container {
+    max-width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 20px 4px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .note-paragraph {
+    font-size: 14.04px;
+    line-height: 1.6;
+    color: #1f2937;
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+  
+  .note-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 12.96px;
+  }
+  
+  .note-table th {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 10px 8px;
+    font-weight: 700;
+  }
+  
+  .note-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  /* Q&A STYLES */
+  .qa-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+  
+  .qa-item {
+    background: white;
+    border-radius: 8px;
+    padding: 14px 6px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-left: 4px solid #028090;
+  }
+  
+  @media (max-width: 900px) {
+    .header h1 { font-size: 2.16rem; }
+    .pdf-viewer { width: 95%; height: 95%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen">
+  <div class="auth-container">
+    <h1>🎓 Class 9</h1>
+    <p>Sign in with your approved Google account</p>
+    
+    <button class="google-signin-btn" onclick="signInWithGoogle()">
+      <svg class="google-icon" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Sign in with Google
+    </button>
+    
+    <div id="errorMessage" class="error-message"></div>
+    <div id="successMessage" class="success-message"></div>
+  </div>
+</div>
+
+<!-- USER INFO -->
+<div id="userInfo" class="user-info">
+  <img id="userPhoto" src="" alt="User">
+  <span id="userName"></span>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp">
+  <div class="header">
+    <h1>Class 9</h1>
+    <div class="subtitle">Biology - Pagewise Notes, MCQs, Q&A</div>
+    <button class="pdf-btn" onclick="openPDF()">📖 NCERT PDF</button>
+  </div>
+
+  <div class="controls">
+    <div class="dropdown-group">
+      <label for="chapterSelect">Chapter:</label>
+      <select id="chapterSelect" onchange="updatePages()">
+        <option value="">Select Chapter</option>
+        <option value="1">Chapter 1</option>
+        <option value="2">Chapter 2</option>
+        <option value="3">Chapter 3</option>
+        <option value="4">Chapter 4</option>
+        <option value="5">Chapter 5</option>
+        <option value="6">Chapter 6</option>
+        <option value="7">Chapter 7</option>
+        <option value="8">Chapter 8</option>
+        <option value="9">Chapter 9</option>
+        <option value="10">Chapter 10</option>
+      </select>
+    </div>
+    <div class="dropdown-group">
+      <label for="pageSelect">Page:</label>
+      <select id="pageSelect" onchange="loadPage()" disabled>
+        <option value="">Select Page</option>
+      </select>
+    </div>
+    <button class="reload-btn" onclick="window.location.reload()">↻ Reload</button>
+  </div>
+
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('mcq')">MCQs</button>
+    <button class="view-btn" onclick="switchView('notes')">Notes</button>
+    <button class="view-btn" onclick="switchView('qa')">Q&A</button>
+  </div>
+
+  <div id="mcqMode">
+    <div class="mcq-container">
+      <div id="mcqContent">
+        <p style="text-align:center; padding:40px; color:#666;">Select a chapter and page</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="notesMode" style="display:none;">
+    <div class="notes-container">
+      <div id="notesContent">
+        <p style="text-align:center; padding:40px; color:#666;">Select a chapter and page</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="qaMode" style="display:none;">
+    <div class="qa-container">
+      <div id="qaContent">
+        <p style="text-align:center; padding:40px; color:#666;">Select a chapter and page</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF VIEWER -->
+<div id="pdfBackdrop" class="pdf-backdrop" onclick="closePDF()"></div>
+<div id="pdfViewer" class="pdf-viewer">
+  <div class="pdf-header">
+    <div class="pdf-title">📖 NCERT Biology</div>
+    <div class="pdf-controls">
+      <button class="pdf-control-btn" onclick="minimizePDF()">⊟</button>
+      <button class="pdf-control-btn" onclick="toggleMaximize()">⛶</button>
+      <button class="pdf-control-btn" onclick="closePDF()">✕</button>
+    </div>
+  </div>
+  <div class="pdf-iframe-container">
+    <iframe id="pdfFrame" src=""></iframe>
+  </div>
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+// ⚠️ CONFIGURATION
+const approvedEmails = [
+  "youremail@gmail.com",
+  "student1@gmail.com",
+  "student2@gmail.com"
+];
+
+const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+
+const pdfLinks = {
+  7: "https://ncert.nic.in/textbook/pdf/kebo108.pdf"
+};
+
+// SESSION MANAGEMENT WITH 3-HOUR TIMEOUT
+let isBlocked = false;
+const THREE_HOURS = 3 * 60 * 60 * 1000;
+
+function generateSessionId() {
+  return Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+}
+
+function checkConcurrentLogin() {
+  const userEmail = sessionStorage.getItem('userEmail');
+  if (!userEmail) return false;
+  
+  const blockUntil = localStorage.getItem(`block_${userEmail}`);
+  if (blockUntil && Date.now() < parseInt(blockUntil)) {
+    showTimeoutBlock(blockUntil);
+    return true;
+  }
+  
+  const sessionId = sessionStorage.getItem('sessionId');
+  const storedData = localStorage.getItem(`session_${userEmail}`);
+  
+  if (storedData) {
+    const { sessionId: storedSessionId, lastActive } = JSON.parse(storedData);
+    const timeDiff = Date.now() - lastActive;
+    
+    if (storedSessionId !== sessionId && timeDiff < 10000) {
+      if (!isBlocked) {
+        isBlocked = true;
+        const blockUntilTime = Date.now() + THREE_HOURS;
+        localStorage.setItem(`block_${userEmail}`, blockUntilTime);
+        showConcurrentLoginError();
+      }
+      return true;
+    }
+  }
+  
+  localStorage.setItem(`session_${userEmail}`, JSON.stringify({
+    sessionId: sessionId,
+    lastActive: Date.now()
+  }));
+  
+  return false;
+}
+
+function showTimeoutBlock(blockUntil) {
+  const remainingTime = parseInt(blockUntil) - Date.now();
+  const hours = Math.floor(remainingTime / (60 * 60 * 1000));
+  const minutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
+  
+  document.getElementById('mainApp').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;min-height:80vh;padding:20px;">
+      <div style="background:white;padding:40px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:500px;text-align:center;">
+        <div style="font-size:80px;margin-bottom:20px;">⏰</div>
+        <h2 style="color:#dc2626;margin-bottom:16px;font-size:24px;">Account Temporarily Blocked</h2>
+        <p style="color:#666;font-size:16px;line-height:1.6;margin-bottom:24px;">
+          Multiple concurrent logins detected. Your account is blocked for 3 hours.
+        </p>
+        <div style="background:#fff3cd;border:2px solid #ffc107;border-radius:10px;padding:16px;margin-bottom:24px;">
+          <p style="color:#856404;font-size:18px;font-weight:700;margin:0;">
+            ⏳ Time Remaining: ${hours}h ${minutes}m
+          </p>
+        </div>
+        <button onclick="logout()" style="background:#667eea;color:white;border:none;padding:12px 32px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;">Logout</button>
+      </div>
+    </div>
+  `;
+  
+  setTimeout(() => location.reload(), 60000);
+}
+
+function showConcurrentLoginError() {
+  document.getElementById('mainApp').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;min-height:80vh;padding:20px;">
+      <div style="background:white;padding:40px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:500px;text-align:center;">
+        <div style="font-size:80px;margin-bottom:20px;">⚠️</div>
+        <h2 style="color:#dc2626;margin-bottom:16px;font-size:24px;">Multiple Users Detected</h2>
+        <p style="color:#666;font-size:16px;line-height:1.6;margin-bottom:24px;">
+          This account is being used on another device. Account blocked for 3 hours.
+        </p>
+        <button onclick="logout()" style="background:#667eea;color:white;border:none;padding:12px 32px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;">Logout</button>
+      </div>
+    </div>
+  `;
+}
+
+function initGoogleSignIn() {
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleCredentialResponse
+  });
+}
+
+function handleCredentialResponse(response) {
+  const userInfo = parseJwt(response.credential);
+  const userEmail = userInfo.email;
+  
+  if (approvedEmails.includes(userEmail)) {
+    const blockUntil = localStorage.getItem(`block_${userEmail}`);
+    if (blockUntil && Date.now() < parseInt(blockUntil)) {
+      showError(`❌ Account blocked. Try again later.`);
+      return;
+    }
+    
+    const sessionId = generateSessionId();
+    sessionStorage.setItem('authenticated', 'true');
+    sessionStorage.setItem('userEmail', userEmail);
+    sessionStorage.setItem('userName', userInfo.name);
+    sessionStorage.setItem('userPhoto', userInfo.picture);
+    sessionStorage.setItem('sessionId', sessionId);
+    
+    localStorage.setItem(`session_${userEmail}`, JSON.stringify({
+      sessionId: sessionId,
+      lastActive: Date.now()
+    }));
+    
+    showSuccess(`✅ Welcome ${userInfo.name}!`);
+    setTimeout(() => {
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      document.getElementById('userInfo').style.display = 'flex';
+      document.getElementById('userName').textContent = userInfo.name;
+      document.getElementById('userPhoto').src = userInfo.picture;
+      
+      window.sessionCheckInterval = setInterval(() => {
+        checkConcurrentLogin();
+      }, 5000);
+    }, 1500);
+  } else {
+    showError(`❌ Access Denied!`);
+  }
+}
+
+function signInWithGoogle() {
+  google.accounts.id.prompt();
+}
+
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
+    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  ).join(''));
+  return JSON.parse(jsonPayload);
+}
+
+function showError(msg) {
+  const div = document.getElementById('errorMessage');
+  div.textContent = msg;
+  div.style.display = 'block';
+  setTimeout(() => div.style.display = 'none', 5000);
+}
+
+function showSuccess(msg) {
+  const div = document.getElementById('successMessage');
+  div.textContent = msg;
+  div.style.display = 'block';
+}
+
+function logout() {
+  const userEmail = sessionStorage.getItem('userEmail');
+  localStorage.removeItem(`session_${userEmail}`);
+  sessionStorage.clear();
+  if (window.sessionCheckInterval) clearInterval(window.sessionCheckInterval);
+  google.accounts.id.disableAutoSelect();
+  location.reload();
+}
+
+setInterval(() => {
+  const userEmail = sessionStorage.getItem('userEmail');
+  const sessionId = sessionStorage.getItem('sessionId');
+  if (userEmail && sessionId && !isBlocked) {
+    localStorage.setItem(`session_${userEmail}`, JSON.stringify({
+      sessionId, lastActive: Date.now()
+    }));
+  }
+}, 3000);
+
+// PDF VIEWER
+let pdfMaximized = false, pdfMinimized = false;
+
+function openPDF() {
+  const chapter = sessionStorage.getItem('currentChapter') || "7";
+  const pdfUrl = pdfLinks[chapter] || pdfLinks[7];
+  document.getElementById('pdfFrame').src = pdfUrl;
+  document.getElementById('pdfViewer').classList.add('show');
+  document.getElementById('pdfBackdrop').classList.add('show');
+}
+
+function closePDF() {
+  document.getElementById('pdfViewer').classList.remove('show');
+  document.getElementById('pdfBackdrop').classList.remove('show');
+  document.getElementById('pdfFrame').src = '';
+}
+
+function minimizePDF() {
+  const viewer = document.getElementById('pdfViewer');
+  viewer.classList.toggle('minimized');
+  pdfMinimized = !pdfMinimized;
+}
+
+function toggleMaximize() {
+  const viewer = document.getElementById('pdfViewer');
+  viewer.classList.toggle('maximized');
+  pdfMaximized = !pdfMaximized;
+}
+
+// CHAPTER DATA
+const chapterData = {
+  "7": {
+    "61": {
+      mcqData: [
+        { question: "Electronic configuration of Al is 2,8,3. Electrons in M shell?", 
+          options: ["a) 2", "b) 8", "c) 3", "d) 13"], correct: "c" }
+      ],
+      notesData: [
+        { heading: "Electronic Configuration", content: `<div class="note-paragraph">Electronic configuration is the arrangement of electrons in shells K, L, M, N around the nucleus.</div>` }
+      ],
+      qaData: [
+        { marks: 1, question: "What is electronic configuration?", answer: "Distribution of electrons in shells K, L, M, N around nucleus." }
+      ]
+    }
+  }
+};
+
+// Initialize chapters 1-6, 8-10 with empty data
+for (let ch = 1; ch <= 10; ch++) {
+  if (ch !== 7) chapterData[ch] = {};
+  const start = (ch - 1) * 10 + 1;
+  for (let p = start; p < start + 10; p++) {
+    if (ch !== 7 || p !== 61) {
+      chapterData[ch][p] = { mcqData: [], notesData: [], qaData: [] };
+    }
+  }
+}
+
+function updatePages() {
+  const ch = document.getElementById('chapterSelect').value;
+  sessionStorage.setItem('currentChapter', ch);
+  const pageSelect = document.getElementById('pageSelect');
+  pageSelect.innerHTML = '<option value="">Select Page</option>';
+  
+  if (ch && chapterData[ch]) {
+    Object.keys(chapterData[ch]).sort((a,b) => parseInt(a) - parseInt(b)).forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = `Page ${p}`;
+      pageSelect.appendChild(opt);
+    });
+    pageSelect.disabled = false;
+  }
+}
+
+function loadPage() {
+  const ch = document.getElementById('chapterSelect').value;
+  const pg = document.getElementById('pageSelect').value;
+  if (!ch || !pg) return;
+  
+  const data = chapterData[ch][pg];
+  const mcqDiv = document.getElementById('mcqContent');
+  const notesDiv = document.getElementById('notesContent');
+  const qaDiv = document.getElementById('qaContent');
+  
+  if (data.mcqData.length) {
+    let html = `<div class="score-display"><span>Score: 0/${data.mcqData.length}</span></div>`;
+    data.mcqData.forEach((q, i) => {
+      html += `<div class="question-item"><div class="question-text">${q.question}</div><div>`;
+      q.options.forEach(opt => {
+        const letter = opt.charAt(0);
+        html += `<div class="option" onclick="checkAnswer(this,'${q.correct}','${letter}')">${opt}</div>`;
+      });
+      html += `</div></div>`;
+    });
+    mcqDiv.innerHTML = html;
+  } else {
+    mcqDiv.innerHTML = '<p style="text-align:center;padding:40px;color:#666;">No MCQs yet</p>';
+  }
+  
+  if (data.notesData.length) {
+    let html = '';
+    data.notesData.forEach(n => {
+      html += `<h3>${n.heading}</h3>${n.content}`;
+    });
+    notesDiv.innerHTML = html;
+  } else {
+    notesDiv.innerHTML = '<p style="text-align:center;padding:40px;color:#666;">No notes yet</p>';
+  }
+  
+  if (data.qaData.length) {
+    let html = '';
+    data.qaData.forEach((q, i) => {
+      html += `<div class="qa-item"><strong>Q${i+1}. ${q.question}</strong><p>${q.answer}</p></div>`;
+    });
+    qaDiv.innerHTML = html;
+  } else {
+    qaDiv.innerHTML = '<p style="text-align:center;padding:40px;color:#666;">No Q&A yet</p>';
+  }
+}
+
+function checkAnswer(el, correct, selected) {
+  if (el.classList.contains('selected')) return;
+  el.closest('.question-item').querySelectorAll('.option').forEach(o => o.style.pointerEvents = 'none');
+  el.classList.add('selected');
+  el.classList.add(selected === correct ? 'correct' : 'wrong');
+}
+
+function switchView(view) {
+  document.getElementById('mcqMode').style.display = view === 'mcq' ? 'block' : 'none';
+  document.getElementById('notesMode').style.display = view === 'notes' ? 'block' : 'none';
+  document.getElementById('qaMode').style.display = view === 'qa' ? 'block' : 'none';
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+window.onload = function() {
+  initGoogleSignIn();
+  if (sessionStorage.getItem('authenticated') === 'true') {
+    if (!checkConcurrentLogin()) {
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      document.getElementById('userInfo').style.display = 'flex';
+      document.getElementById('userName').textContent = sessionStorage.getItem('userName');
+      document.getElementById('userPhoto').src = sessionStorage.getItem('userPhoto');
+      window.sessionCheckInterval = setInterval(() => checkConcurrentLogin(), 5000);
+    }
+  }
+};
+</script>
+</body>
+</html>
