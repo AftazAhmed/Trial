@@ -5,92 +5,52 @@
     <title>BLOSSOM WORLD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
-            color: #333;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f6f9fc;
+            margin: 0;
         }
         header {
-            background: linear-gradient(135deg, #5e72e4, #825ee4);
+            background: #6a89cc;
             color: #fff;
-            padding: 40px 20px;
+            padding: 32px;
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 2rem;
+            letter-spacing: 0.12em;
         }
         .container {
             background: #fff;
-            border-radius: 16px;
-            margin: 24px auto;
-            padding: 24px 28px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            max-width: 900px;
-            transition: transform 0.2s ease;
-        }
-        .container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            margin: 22px auto;
+            padding: 18px 22px;
+            box-shadow: 0 2px 10px rgba(88,108,124,0.10);
+            max-width: 850px;
         }
         .section-title {
-            font-size: 1.5em;
-            margin-bottom: 18px;
-            color: #5e72e4;
+            font-size: 1.22em;
+            margin-bottom: 13px;
+            color: #41729f;
             font-weight: 600;
-            border-bottom: 3px solid #5e72e4;
-            padding-bottom: 8px;
         }
         .subject-micro {
-            margin: 14px 0 20px 0;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #38ada9;
+            margin: 7px 0 16px 0;
         }
         .subject-name {
-            font-weight: 600;
+            font-weight: 500;
             color: #38ada9;
-            margin-bottom: 8px;
-            font-size: 1.15em;
-        }
-        .schedule-content {
-            color: #555;
-            line-height: 1.6;
-            min-height: 40px;
+            margin-bottom: 6px;
         }
         .ppt-container {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            padding: 20px;
-            margin-top: 16px;
-            border-radius: 12px;
-            min-height: 120px;
-            border: 2px dashed #ff9800;
+            background: #f1f4f7;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 10px;
+            min-height: 90px;
         }
         .ppt-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #e65100;
-            margin-bottom: 12px;
-        }
-        .action-plans {
-            background: #e8f5e9;
-            padding: 16px;
-            border-radius: 10px;
-            margin-bottom: 16px;
-            min-height: 80px;
-            border-left: 5px solid #4caf50;
-        }
-        .action-plans-title {
-            font-weight: 600;
-            color: #2e7d32;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+            font-size: 1.08em;
+            font-weight: 500;
+            color: #b71540;
         }
     </style>
 </head>
@@ -98,241 +58,79 @@
     <header>
         BLOSSOM WORLD
     </header>
-
-    <!-- General Section -->
     <div class="container" id="general-section">
-        <div class="section-title">General Section</div>
-        <div class="action-plans">
-            <div class="action-plans-title">Action Plans & Announcements</div>
-            <div>
-                <!-- Add your school-wide action plans, announcements, and notes here -->
-            </div>
+        <div class="section-title">General Action Plans</div>
+        <div>
+            <!-- Space for action plans, school-wide notes, announcements -->
         </div>
         <div class="ppt-container" id="ppt-section">
             <div class="ppt-title">PPT Area</div>
-            <div>
-                <!-- Future HTML PPT content will be inserted here -->
-            </div>
+            <!-- Future HTML PPTs will be filled in here -->
         </div>
     </div>
-
-    <!-- Class 1 -->
+    <!-- Classes 1 to 10: Microschedules and subjects -->
+    <!-- Repeat the following block for each class (1–10) -->
+    <!-- Example for classes 1 to 10 below: -->
     <div class="container" id="class-1-section">
         <div class="section-title">Class 1 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content">
-                <!-- Add Class 1 Maths microschedule here -->
-            </div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content">
-                <!-- Add Class 1 Science microschedule here -->
-            </div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content">
-                <!-- Add Class 1 English microschedule here -->
-            </div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content">
-                <!-- Add Class 1 Social Studies microschedule here -->
-            </div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div><!-- Add schedules/actions here --></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div><!-- Add schedules/actions here --></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div><!-- Add schedules/actions here --></div></div>
+        <!-- Add more subjects as needed -->
     </div>
-
-    <!-- Class 2 -->
     <div class="container" id="class-2-section">
         <div class="section-title">Class 2 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 3 -->
     <div class="container" id="class-3-section">
         <div class="section-title">Class 3 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 4 -->
     <div class="container" id="class-4-section">
         <div class="section-title">Class 4 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 5 -->
     <div class="container" id="class-5-section">
         <div class="section-title">Class 5 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 6 -->
     <div class="container" id="class-6-section">
         <div class="section-title">Class 6 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 7 -->
     <div class="container" id="class-7-section">
         <div class="section-title">Class 7 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 8 -->
     <div class="container" id="class-8-section">
         <div class="section-title">Class 8 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 9 -->
     <div class="container" id="class-9-section">
         <div class="section-title">Class 9 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
-    <!-- Class 10 -->
     <div class="container" id="class-10-section">
         <div class="section-title">Class 10 Microschedules</div>
-        <div class="subject-micro">
-            <div class="subject-name">Mathematics</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Science</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">English</div>
-            <div class="schedule-content"></div>
-        </div>
-        <div class="subject-micro">
-            <div class="subject-name">Social Studies</div>
-            <div class="schedule-content"></div>
-        </div>
+        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
+        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
     </div>
-
 </body>
 </html>
