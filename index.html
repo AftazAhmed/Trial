@@ -1,1305 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Class 9 - Biology Platform</title>
-<style>
-  * { box-sizing: border-box; }
-  
-  body {
-    font-family: 'Montserrat', Arial, sans-serif;
-    margin: 0;
-    padding: 16px 8px;
-    background-color: #f9fafb;
-    color: #1f2937;
-    font-size: 14.04px;
-  }
-  
-  /* HEADER */
-  .header {
-    text-align: center;
-    background-color: #023047;
-    color: #ffb347;
-    padding: 32px 16px 24px 16px;
-    border-radius: 10px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, #4f59b0 0%, transparent 70%);
-    opacity: 0.3;
-  }
-  
-  .header h1 {
-    position: relative;
-    margin: 0 0 8px 0;
-    font-size: 2.7rem;
-    font-weight: 900;
-    color: #ffa726;
-  }
-  
-  .header .subtitle {
-    position: relative;
-    font-size: 17.28px;
-    font-weight: 600;
-    color: #b9fbc0;
-  }
-  
-  .pdf-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(238, 90, 111, 0.4);
-    transition: all 0.3s;
-    z-index: 100;
-  }
-  
-  .pdf-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(238, 90, 111, 0.6);
-  }
-  
-  /* PDF VIEWER */
-  .pdf-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9998;
-    display: none;
-  }
-  
-  .pdf-backdrop.show { display: block; }
-  
-  .pdf-viewer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 90%;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    display: none;
-    flex-direction: column;
-  }
-  
-  .pdf-viewer.show { display: flex; }
-  
-  .pdf-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 12px 12px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .pdf-title {
-    font-size: 16px;
-    font-weight: 700;
-  }
-  
-  .pdf-controls {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .pdf-control-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s;
-  }
-  
-  .pdf-control-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-  
-  .pdf-iframe-container {
-    flex: 1;
-    overflow: hidden;
-  }
-  
-  .pdf-iframe-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-  
-  .pdf-viewer.minimized {
-    width: 50%;
-    height: 60%;
-  }
-  
-  .pdf-viewer.maximized {
-    width: 95%;
-    height: 95%;
-  }
-  
-  /* TEXT SELECTION CHATGPT BUTTON */
-  .chatgpt-selection-btn {
-    position: absolute;
-    background: linear-gradient(135deg, #10a37f, #1a7f64);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(16, 163, 127, 0.4);
-    z-index: 10000;
-    display: none;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s;
-    animation: popIn 0.3s ease-out;
-  }
-  
-  .chatgpt-selection-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(16, 163, 127, 0.6);
-    background: linear-gradient(135deg, #0d8a6a, #15654f);
-  }
-  
-  .chatgpt-selection-btn::before {
-    content: '🤖';
-    font-size: 16px;
-  }
-  
-  @keyframes popIn {
-    from {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  /* CONTROLS */
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 12px;
-    justify-content: center;
-  }
-  
-  .dropdown-group {
-    min-width: 140px;
-    flex: 1;
-  }
-  
-  label {
-    display: block;
-    font-weight: 700;
-    font-size: 14.04px;
-    margin-bottom: 5px;
-    color: #344e41;
-  }
-  
-  select {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 2px solid #028090;
-    font-size: 14.04px;
-    background-color: #ffffff;
-    color: #023047;
-  }
-  
-  select:focus {
-    outline: none;
-    border-color: #023047;
-    background-color: #e0f7f4;
-  }
-  
-  .reload-btn {
-    background-color: #8b5cf6;
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 12.96px;
-    cursor: pointer;
-  }
-  
-  /* VIEW TOGGLE */
-  .view-toggle {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .view-btn {
-    padding: 8px 16px;
-    border: 2px solid #028090;
-    background: white;
-    color: #023047;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 14.04px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .view-btn:hover, .view-btn.active {
-    background: #028090;
-    color: white;
-  }
-  
-  /* MCQ STYLES */
-  .mcq-container {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  
-  .score-display {
-    background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
-    color: white;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 17.28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .reset-score-btn {
-    background: #ff9800;
-    color: #000;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12.96px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  
-  .question-count {
-    font-weight: 700;
-    font-size: 16.2px;
-    color: #116466;
-    margin-bottom: 14px;
-    border-left: 4px solid #028090;
-    padding-left: 12px;
-  }
-  
-  .question-item {
-    background-color: #fff8f0;
-    border-radius: 8px;
-    border: 1.5px solid #f0c49c;
-    margin-bottom: 20px;
-    padding: 16px;
-  }
-  
-  .question-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  
-  .question-number {
-    font-weight: 700;
-    font-size: 17.28px;
-    color: #2a6f62;
-  }
-  
-  .chatgpt-btn {
-    background: linear-gradient(90deg, #dc2626, #2563eb);
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 11.88px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  
-  .question-text {
-    font-weight: 600;
-    font-size: 14.04px;
-    color: #255c4d;
-    margin-bottom: 12px;
-    line-height: 1.6;
-  }
-  
-  .option {
-    background-color: #ffffff;
-    border-radius: 6px;
-    border: 1.8px solid #b5d0c8;
-    padding: 10px 14px;
-    margin: 6px 0;
-    font-weight: 500;
-    font-size: 14.04px;
-    color: #244636;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-  }
-  
-  .option:hover:not(.selected) {
-    background-color: #e8f5f1;
-    border-color: #71b280;
-  }
-  
-  .option.selected.correct {
-    background-color: #d4edda;
-    border-color: #28a745;
-  }
-  
-  .option.selected.wrong {
-    background-color: #f8d7da;
-    border-color: #dc3545;
-  }
-  
-  .option.selected.correct::after {
-    content: "✓";
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #28a745;
-    font-weight: 700;
-    font-size: 19.44px;
-  }
-  
-  .option.selected.wrong::after {
-    content: "✗";
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #dc3545;
-    font-weight: 700;
-    font-size: 19.44px;
-  }
-  
-  .answer-display, .hint-display {
-    border-radius: 6px;
-    padding: 12px;
-    margin: 12px 0;
-    font-size: 14.04px;
-    font-weight: 600;
-    display: none;
-  }
-  
-  .answer-display {
-    background: linear-gradient(135deg, #d4edda, #c3e6cb);
-    border: 2px solid #28a745;
-    color: #155724;
-  }
-  
-  .hint-display {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-    border: 2px solid #ff9800;
-    color: #e65100;
-  }
-  
-  .answer-display.show, .hint-display.show {
-    display: block;
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  
-  .btn {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 14.04px;
-  }
-  
-  .btn-answer {
-    background-color: #047857;
-    color: #fff;
-  }
-  
-  .btn-hint {
-    background-color: #dc2626;
-    color: #fff;
-  }
-  
-  /* NOTES STYLES */
-  .notes-container {
-    max-width: 100%;
-    margin: 0 auto;
-    background: white;
-    padding: 20px 4px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  .notes-title {
-    font-size: 23.76px;
-    font-weight: 800;
-    color: #023047;
-    margin-bottom: 20px;
-    text-align: center;
-    border-bottom: 3px solid #028090;
-    padding-bottom: 10px;
-  }
-  
-  .note-segment {
-    margin-bottom: 24px;
-    padding: 16px 8px;
-    background: #f9fafb;
-    border-radius: 6px;
-    border-left: 4px solid #028090;
-    position: relative;
-  }
-  
-  .note-segment .ai-btn {
-    position: absolute;
-    top: 12px;
-    right: 8px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #dc2626, #2563eb);
-    color: white;
-    border: none;
-    font-size: 12.96px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  
-  .segment-heading {
-    font-size: 18.36px;
-    font-weight: 700;
-    color: #116466;
-    margin-bottom: 12px;
-    padding-right: 40px;
-  }
-  
-  .segment-subheading {
-    font-size: 16.2px;
-    font-weight: 700;
-    color: #2a6f62;
-    margin-top: 12px;
-    margin-bottom: 8px;
-  }
-  
-  .note-paragraph {
-    font-size: 14.04px;
-    line-height: 1.6;
-    color: #1f2937;
-    margin-bottom: 10px;
-    text-align: justify;
-  }
-  
-  .note-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    background: white;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    font-size: 12.96px;
-  }
-  
-  .note-table th {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 10px 8px;
-    text-align: left;
-    font-weight: 700;
-  }
-  
-  .note-table td {
-    padding: 10px 8px;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .note-table tr:hover {
-    background-color: #f9fafb;
-  }
-  
-  .equation-box {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border: 2px solid #2196f3;
-    padding: 14px;
-    margin: 14px 0;
-    border-radius: 6px;
-    text-align: center;
-  }
-  
-  .equation-text {
-    font-size: 16.2px;
-    font-weight: 600;
-    color: #0d47a1;
-  }
-  
-  .definition-box {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border-left: 4px solid #2196f3;
-    padding: 12px 16px;
-    margin: 12px 0;
-    border-radius: 6px;
-  }
-  
-  .definition-term {
-    font-weight: 700;
-    color: #0d47a1;
-    font-size: 15.12px;
-    margin-bottom: 6px;
-  }
-  
-  .definition-text {
-    color: #1565c0;
-    line-height: 1.6;
-    font-size: 14.04px;
-  }
-  
-  .important-note {
-    background: linear-gradient(135deg, #ffebee, #ffcdd2);
-    border: 2px solid #f44336;
-    padding: 12px 16px;
-    margin: 12px 0;
-    border-radius: 6px;
-    font-size: 14.04px;
-  }
-  
-  .important-note strong {
-    color: #c62828;
-  }
-  
-  /* Q&A STYLES */
-  .qa-container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0 8px;
-  }
-  
-  .mark-filter {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  
-  .mark-filter-btn {
-    padding: 6px 12px;
-    border: 2px solid #e0e0e0;
-    background: white;
-    border-radius: 16px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 11.88px;
-    transition: all 0.3s;
-  }
-  
-  .mark-filter-btn.active { border-color: transparent; }
-  
-  .mark-filter-btn.filter-all.active {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-  }
-  
-  .mark-filter-btn.filter-1.active {
-    background: linear-gradient(135deg, #4caf50, #66bb6a);
-    color: white;
-  }
-  
-  .mark-filter-btn.filter-2.active {
-    background: linear-gradient(135deg, #2196f3, #42a5f5);
-    color: white;
-  }
-  
-  .mark-filter-btn.filter-3.active {
-    background: linear-gradient(135deg, #ff9800, #ffa726);
-    color: white;
-  }
-  
-  .mark-filter-btn.filter-5.active {
-    background: linear-gradient(135deg, #f44336, #ef5350);
-    color: white;
-  }
-  
-  .qa-item {
-    background: white;
-    border-radius: 8px;
-    padding: 14px 6px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    border-left: 4px solid #028090;
-    position: relative;
-  }
-  
-  .qa-item .ai-btn {
-    position: absolute;
-    top: 12px;
-    right: 6px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #dc2626, #2563eb);
-    color: white;
-    border: none;
-    font-size: 12.96px;
-    cursor: pointer;
-  }
-  
-  .qa-item.mark-1-item { border-left-color: #4caf50; }
-  .qa-item.mark-2-item { border-left-color: #2196f3; }
-  .qa-item.mark-3-item { border-left-color: #ff9800; }
-  .qa-item.mark-5-item { border-left-color: #f44336; }
-  
-  .qa-question {
-    font-size: 15.12px;
-    font-weight: 700;
-    color: #023047;
-    margin-bottom: 14px;
-    line-height: 1.6;
-    padding-right: 40px;
-  }
-  
-  .qa-question-number {
-    display: inline-block;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 16px;
-    font-size: 12.96px;
-    margin-right: 8px;
-  }
-  
-  .mark-badge {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 16px;
-    font-size: 11.88px;
-    font-weight: 700;
-    margin-left: 8px;
-  }
-  
-  .mark-1 { background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; }
-  .mark-2 { background: linear-gradient(135deg, #2196f3, #42a5f5); color: white; }
-  .mark-3 { background: linear-gradient(135deg, #ff9800, #ffa726); color: white; }
-  .mark-5 { background: linear-gradient(135deg, #f44336, #ef5350); color: white; }
-  
-  .qa-answer-section {
-    background: #f9fafb;
-    padding: 12px 6px;
-    border-radius: 6px;
-    margin-top: 12px;
-  }
-  
-  .qa-answer-label {
-    font-weight: 700;
-    color: #116466;
-    font-size: 15.12px;
-    margin-bottom: 10px;
-    display: block;
-  }
-  
-  .answer-1mark, .answer-2mark, .answer-3mark, .answer-5mark {
-    padding: 10px 6px;
-    border-radius: 6px;
-    font-size: 14.04px;
-    line-height: 1.6;
-  }
-  
-  .answer-1mark {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-    border-left: 3px solid #4caf50;
-  }
-  
-  .answer-2mark {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border-left: 3px solid #2196f3;
-  }
-  
-  .answer-2mark .point {
-    margin: 8px 0;
-    padding-left: 18px;
-    position: relative;
-  }
-  
-  .answer-2mark .point:before {
-    content: "●";
-    position: absolute;
-    left: 0;
-    color: #2196f3;
-    font-weight: 700;
-  }
-  
-  .answer-3mark {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-    border-left: 3px solid #ff9800;
-  }
-  
-  .answer-3mark .point {
-    margin: 10px 0;
-    padding: 8px 6px;
-    background: white;
-    border-radius: 5px;
-  }
-  
-  .answer-3mark .point strong {
-    color: #e65100;
-  }
-  
-  .answer-5mark {
-    background: linear-gradient(135deg, #ffebee, #ffcdd2);
-    border-left: 3px solid #f44336;
-  }
-  
-  .answer-5mark .section {
-    margin: 10px 0;
-    padding: 10px 8px;
-    background: white;
-    border-radius: 6px;
-  }
-  
-  .answer-5mark .section h5 {
-    margin: 0 0 8px 0;
-    color: #c62828;
-    font-size: 15.12px;
-  }
-  
-  .answer-5mark .section p {
-    margin: 6px 0;
-  }
-  
-  @media (max-width: 900px) {
-    .header h1 { font-size: 2.16rem; }
-    .pdf-viewer { width: 95%; height: 95%; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <title>BLOSSOM WORLD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #5e72e4, #825ee4);
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            margin: 24px auto;
+            padding: 24px 28px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            max-width: 900px;
+            transition: transform 0.2s ease;
+        }
+        .container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 18px;
+            color: #5e72e4;
+            font-weight: 600;
+            border-bottom: 3px solid #5e72e4;
+            padding-bottom: 8px;
+        }
+        .subject-micro {
+            margin: 14px 0 20px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #38ada9;
+        }
+        .subject-name {
+            font-weight: 600;
+            color: #38ada9;
+            margin-bottom: 8px;
+            font-size: 1.15em;
+        }
+        .schedule-content {
+            color: #555;
+            line-height: 1.6;
+            min-height: 40px;
+        }
+        .ppt-container {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 20px;
+            margin-top: 16px;
+            border-radius: 12px;
+            min-height: 120px;
+            border: 2px dashed #ff9800;
+        }
+        .ppt-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 12px;
+        }
+        .action-plans {
+            background: #e8f5e9;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            min-height: 80px;
+            border-left: 5px solid #4caf50;
+        }
+        .action-plans-title {
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        BLOSSOM WORLD
+    </header>
 
-<div class="header">
-  <h1>Class 9</h1>
-  <div class="subtitle">Biology - Pagewise Notes, MCQs, Q&A</div>
-  <button class="pdf-btn" onclick="openPDF()">📖 NCERT PDF</button>
-</div>
-
-<div class="controls">
-  <div class="dropdown-group">
-    <label for="chapterSelect">Chapter:</label>
-    <select id="chapterSelect" onchange="updatePages()">
-      <option value="">Select Chapter</option>
-      <option value="1">Chapter 1</option>
-      <option value="2">Chapter 2</option>
-      <option value="3">Chapter 3</option>
-      <option value="4">Chapter 4</option>
-      <option value="5">Chapter 5</option>
-      <option value="6">Chapter 6</option>
-      <option value="7">Chapter 7 - Cell Structure</option>
-      <option value="8">Chapter 8</option>
-      <option value="9">Chapter 9</option>
-      <option value="10">Chapter 10</option>
-    </select>
-  </div>
-  <div class="dropdown-group">
-    <label for="pageSelect">Page:</label>
-    <select id="pageSelect" onchange="loadPage()" disabled>
-      <option value="">Select Page</option>
-    </select>
-  </div>
-  <button class="reload-btn" onclick="window.location.reload()">↻ Reload</button>
-</div>
-
-<div class="view-toggle">
-  <button class="view-btn active" onclick="switchView('mcq')">MCQs</button>
-  <button class="view-btn" onclick="switchView('notes')">Notes</button>
-  <button class="view-btn" onclick="switchView('qa')">Q&A</button>
-</div>
-
-<div id="mcqMode">
-  <div class="mcq-container">
-    <div id="mcqContent">
-      <p style="text-align:center; padding:40px; color:#666;">Select Chapter 7 to see sample content</p>
+    <!-- General Section -->
+    <div class="container" id="general-section">
+        <div class="section-title">General Section</div>
+        <div class="action-plans">
+            <div class="action-plans-title">Action Plans & Announcements</div>
+            <div>
+                <!-- Add your school-wide action plans, announcements, and notes here -->
+            </div>
+        </div>
+        <div class="ppt-container" id="ppt-section">
+            <div class="ppt-title">PPT Area</div>
+            <div>
+                <!-- Future HTML PPT content will be inserted here -->
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<div id="notesMode" style="display:none;">
-  <div class="notes-container">
-    <div id="notesContent">
-      <p style="text-align:center; padding:40px; color:#666;">Select Chapter 7 to see sample content</p>
+    <!-- Class 1 -->
+    <div class="container" id="class-1-section">
+        <div class="section-title">Class 1 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content">
+                <!-- Add Class 1 Maths microschedule here -->
+            </div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content">
+                <!-- Add Class 1 Science microschedule here -->
+            </div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content">
+                <!-- Add Class 1 English microschedule here -->
+            </div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content">
+                <!-- Add Class 1 Social Studies microschedule here -->
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<div id="qaMode" style="display:none;">
-  <h2 style="text-align:center; color:#023047; margin:0 8px 20px 8px; font-size:21.6px;">📝 Questions & Answers</h2>
-  
-  <div class="mark-filter">
-    <button class="mark-filter-btn filter-all active" onclick="filterByMark('all')">All Questions</button>
-    <button class="mark-filter-btn filter-1" onclick="filterByMark(1)">1 Mark</button>
-    <button class="mark-filter-btn filter-2" onclick="filterByMark(2)">2 Marks</button>
-    <button class="mark-filter-btn filter-3" onclick="filterByMark(3)">3 Marks</button>
-    <button class="mark-filter-btn filter-5" onclick="filterByMark(5)">5 Marks</button>
-  </div>
-  
-  <div class="qa-container">
-    <div id="qaContent">
-      <p style="text-align:center; padding:40px; color:#666;">Select Chapter 7 to see sample content</p>
+    <!-- Class 2 -->
+    <div class="container" id="class-2-section">
+        <div class="section-title">Class 2 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- PDF VIEWER -->
-<div id="pdfBackdrop" class="pdf-backdrop" onclick="closePDF()"></div>
-<div id="pdfViewer" class="pdf-viewer">
-  <div class="pdf-header">
-    <div class="pdf-title">📖 NCERT Biology - Cell Structure</div>
-    <div class="pdf-controls">
-      <button class="pdf-control-btn" onclick="minimizePDF()" title="Minimize">⊟</button>
-      <button class="pdf-control-btn" onclick="toggleMaximize()" title="Maximize">⛶</button>
-      <button class="pdf-control-btn" onclick="closePDF()" title="Close">✕</button>
+    <!-- Class 3 -->
+    <div class="container" id="class-3-section">
+        <div class="section-title">Class 3 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
     </div>
-  </div>
-  <div class="pdf-iframe-container">
-    <iframe id="pdfFrame" src=""></iframe>
-  </div>
-</div>
 
-<!-- TEXT SELECTION CHATGPT BUTTON -->
-<button id="selectionChatGPT" class="chatgpt-selection-btn">Ask ChatGPT</button>
+    <!-- Class 4 -->
+    <div class="container" id="class-4-section">
+        <div class="section-title">Class 4 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-<script>
-// PDF LINKS
-const pdfLinks = {
-  1: "https://ncert.nic.in/textbook/pdf/kebo105.pdf",
-  2: "https://ncert.nic.in/textbook/pdf/kebo106.pdf",
-  3: "https://ncert.nic.in/textbook/pdf/kebo107.pdf",
-  7: "https://ncert.nic.in/textbook/pdf/kebo108.pdf",
-  8: "https://ncert.nic.in/textbook/pdf/kebo109.pdf",
-  9: "https://ncert.nic.in/textbook/pdf/kebo110.pdf",
-  10: "https://ncert.nic.in/textbook/pdf/kebo111.pdf"
-};
+    <!-- Class 5 -->
+    <div class="container" id="class-5-section">
+        <div class="section-title">Class 5 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-let currentChapter = '';
-let currentPage = '';
-let pdfMaximized = false;
-let pdfMinimized = false;
+    <!-- Class 6 -->
+    <div class="container" id="class-6-section">
+        <div class="section-title">Class 6 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-// PDF VIEWER FUNCTIONS
-function openPDF() {
-  const chapter = currentChapter || "7";
-  const pdfUrl = pdfLinks[chapter] || pdfLinks[7];
-  document.getElementById('pdfFrame').src = pdfUrl;
-  document.getElementById('pdfViewer').classList.add('show');
-  document.getElementById('pdfBackdrop').classList.add('show');
-}
+    <!-- Class 7 -->
+    <div class="container" id="class-7-section">
+        <div class="section-title">Class 7 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-function closePDF() {
-  document.getElementById('pdfViewer').classList.remove('show');
-  document.getElementById('pdfBackdrop').classList.remove('show');
-  document.getElementById('pdfFrame').src = '';
-}
+    <!-- Class 8 -->
+    <div class="container" id="class-8-section">
+        <div class="section-title">Class 8 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-function minimizePDF() {
-  const viewer = document.getElementById('pdfViewer');
-  if (pdfMinimized) {
-    viewer.classList.remove('minimized');
-    pdfMinimized = false;
-  } else {
-    viewer.classList.remove('maximized');
-    viewer.classList.add('minimized');
-    pdfMinimized = true;
-    pdfMaximized = false;
-  }
-}
+    <!-- Class 9 -->
+    <div class="container" id="class-9-section">
+        <div class="section-title">Class 9 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-function toggleMaximize() {
-  const viewer = document.getElementById('pdfViewer');
-  if (pdfMaximized) {
-    viewer.classList.remove('maximized');
-    pdfMaximized = false;
-  } else {
-    viewer.classList.remove('minimized');
-    viewer.classList.add('maximized');
-    pdfMaximized = true;
-    pdfMinimized = false;
-  }
-}
+    <!-- Class 10 -->
+    <div class="container" id="class-10-section">
+        <div class="section-title">Class 10 Microschedules</div>
+        <div class="subject-micro">
+            <div class="subject-name">Mathematics</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Science</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">English</div>
+            <div class="schedule-content"></div>
+        </div>
+        <div class="subject-micro">
+            <div class="subject-name">Social Studies</div>
+            <div class="schedule-content"></div>
+        </div>
+    </div>
 
-// TEXT SELECTION → CHATGPT
-let selectedText = '';
-const selectionBtn = document.getElementById('selectionChatGPT');
-
-document.addEventListener('mouseup', function(e) {
-  setTimeout(() => {
-    const selection = window.getSelection();
-    const text = selection.toString().trim();
-    
-    if (text.length > 0) {
-      selectedText = text;
-      const range = selection.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
-      
-      selectionBtn.style.left = `${rect.left + (rect.width / 2) - 65}px`;
-      selectionBtn.style.top = `${rect.top + window.scrollY - 50}px`;
-      selectionBtn.style.display = 'flex';
-    } else {
-      hideSelectionButton();
-    }
-  }, 10);
-});
-
-document.addEventListener('mousedown', function(e) {
-  if (!e.target.closest('#selectionChatGPT')) {
-    const selection = window.getSelection();
-    if (selection.toString().length === 0) {
-      hideSelectionButton();
-    }
-  }
-});
-
-selectionBtn.addEventListener('click', function() {
-  if (selectedText) {
-    const encodedText = encodeURIComponent(selectedText);
-    window.open(`https://chat.openai.com/?q=${encodedText}`, '_blank');
-    hideSelectionButton();
-  }
-});
-
-function hideSelectionButton() {
-  selectionBtn.style.display = 'none';
-  selectedText = '';
-}
-
-// CHAPTER DATA WITH SAMPLE CONTENT
-const chapterData = {
-  "7": {
-    "61": {
-      mcqData: [
-        {
-          question: "The electronic configuration of Aluminium is 2, 8, 3. How many electrons are present in the M shell?",
-          options: ["a) 2", "b) 8", "c) 3", "d) 13"],
-          correct: "c",
-          hint: "Look at the third number in the electronic configuration. The shells are labeled K, L, M in order."
-        },
-        {
-          question: "Which noble gas has the electronic configuration 2, 8, 8?",
-          options: ["a) Helium", "b) Neon", "c) Argon", "d) Krypton"],
-          correct: "c",
-          hint: "Count the total number of electrons (2+8+8=18). The element with atomic number 18 is this noble gas."
-        },
-        {
-          question: "Sodium atom loses one electron to form sodium cation. The electronic configuration of Na⁺ is:",
-          options: ["a) 2, 8, 1", "b) 2, 8", "c) 2, 7", "d) 2, 8, 2"],
-          correct: "b",
-          hint: "Sodium starts with 2, 8, 1. When it loses one electron from the outermost shell, what remains?"
-        },
-        {
-          question: "Chlorine gains one electron to form chloride anion. The electronic configuration of Cl⁻ is:",
-          options: ["a) 2, 8, 7", "b) 2, 7, 8", "c) 2, 8, 6", "d) 2, 8, 8"],
-          correct: "d",
-          hint: "Chlorine has 2, 8, 7. When it gains one electron in the M shell, the M shell will have 7+1 electrons."
-        },
-        {
-          question: "Which element has 17 protons and 18 electrons?",
-          options: ["a) Chlorine atom", "b) Chloride ion", "c) Argon atom", "d) Sodium cation"],
-          correct: "b",
-          hint: "An element is identified by the number of protons. If electrons > protons, it's a negative ion (anion)."
-        }
-      ],
-      notesData: [
-        {
-          heading: "Introduction to Electronic Configuration",
-          content: `<div class="note-paragraph">Electronic configuration represents the arrangement of electrons in different shells around the nucleus of an atom. The shells are designated as K, L, M, N and can hold a maximum number of electrons according to the formula 2n², where n is the shell number.</div><div class="definition-box"><div class="definition-term">Electronic Configuration</div><div class="definition-text">The distribution of electrons in an atom among the available shells K, L, M, N surrounding the nucleus.</div></div>`
-        },
-        {
-          heading: "Maximum Electrons in Each Shell",
-          content: `<table class="note-table"><thead><tr><th>Shell Name</th><th>Shell Number (n)</th><th>Maximum Electrons (2n²)</th></tr></thead><tbody><tr><td>K</td><td>1</td><td>2</td></tr><tr><td>L</td><td>2</td><td>8</td></tr><tr><td>M</td><td>3</td><td>18</td></tr><tr><td>N</td><td>4</td><td>32</td></tr></tbody></table><div class="important-note"><strong>Important:</strong> The outermost shell can hold a maximum of 8 electrons, even if the formula allows more.</div>`
-        },
-        {
-          heading: "Electronic Configuration of Elements",
-          content: `<table class="note-table"><thead><tr><th>Type</th><th>Element</th><th>Atomic No</th><th>K</th><th>L</th><th>M</th><th>N</th></tr></thead><tbody><tr><td rowspan="3"><strong>Noble Gases</strong></td><td>Helium (He)</td><td>2</td><td>2</td><td>-</td><td>-</td><td>-</td></tr><tr><td>Neon (Ne)</td><td>10</td><td>2</td><td>8</td><td>-</td><td>-</td></tr><tr><td>Argon (Ar)</td><td>18</td><td>2</td><td>8</td><td>8</td><td>-</td></tr><tr><td rowspan="5"><strong>Metals</strong></td><td>Sodium (Na)</td><td>11</td><td>2</td><td>8</td><td>1</td><td>-</td></tr><tr><td>Magnesium (Mg)</td><td>12</td><td>2</td><td>8</td><td>2</td><td>-</td></tr><tr><td>Aluminium (Al)</td><td>13</td><td>2</td><td>8</td><td>3</td><td>-</td></tr><tr><td>Potassium (K)</td><td>19</td><td>2</td><td>8</td><td>8</td><td>1</td></tr><tr><td>Calcium (Ca)</td><td>20</td><td>2</td><td>8</td><td>8</td><td>2</td></tr><tr><td rowspan="6"><strong>Non-Metals</strong></td><td>Nitrogen (N)</td><td>7</td><td>2</td><td>5</td><td>-</td><td>-</td></tr><tr><td>Oxygen (O)</td><td>8</td><td>2</td><td>6</td><td>-</td><td>-</td></tr><tr><td>Fluorine (F)</td><td>9</td><td>2</td><td>7</td><td>-</td><td>-</td></tr><tr><td>Phosphorus (P)</td><td>15</td><td>2</td><td>8</td><td>5</td><td>-</td></tr><tr><td>Sulphur (S)</td><td>16</td><td>2</td><td>8</td><td>6</td><td>-</td></tr><tr><td>Chlorine (Cl)</td><td>17</td><td>2</td><td>8</td><td>7</td><td>-</td></tr></tbody></table>`
-        },
-        {
-          heading: "Formation of Ions",
-          content: `<div class="segment-subheading">Cation Formation</div><div class="note-paragraph">Metals lose electrons from their outermost shell to attain stable noble gas configuration. The atom becomes positively charged after losing electrons.</div><div class="equation-box"><div class="equation-text">Na → Na⁺ + e⁻<br>2, 8, 1 → 2, 8<br><span style="font-size:11.88px; color:#666;">Sodium cation</span></div></div><div class="segment-subheading">Anion Formation</div><div class="note-paragraph">Non-metals gain electrons in their outermost shell to complete their octet and attain stable noble gas configuration. The atom becomes negatively charged after gaining electrons.</div><div class="equation-box"><div class="equation-text">Cl + e⁻ → Cl⁻<br>2, 8, 7 → 2, 8, 8<br><span style="font-size:11.88px; color:#666;">Chloride anion</span></div></div>`
-        }
-      ],
-      qaData: [
-        {
-          marks: 1,
-          question: "What is electronic configuration?",
-          answer: "Electronic configuration is the distribution or arrangement of electrons in different shells K, L, M, N around the nucleus of an atom."
-        },
-        {
-          marks: 2,
-          question: "Write the electronic configuration of sodium and chlorine. How do they form ions?",
-          answer: `<div class="point"><strong>Electronic Configuration:</strong> Sodium (Na) has atomic number 11 with configuration 2, 8, 1. Chlorine (Cl) has atomic number 17 with configuration 2, 8, 7.</div><div class="point"><strong>Ion Formation:</strong> Sodium loses one electron to form Na⁺ (2, 8). Chlorine gains one electron to form Cl⁻ (2, 8, 8). Both attain stable noble gas configuration.</div>`
-        },
-        {
-          marks: 3,
-          question: "Explain the formation of sodium chloride with electronic configuration.",
-          answer: `<div class="point"><strong>Step 1: Initial Configuration (½ mark)</strong><br>Sodium (Na) has electronic configuration 2, 8, 1<br>Chlorine (Cl) has electronic configuration 2, 8, 7</div><div class="point"><strong>Step 2: Electron Transfer (1½ marks)</strong><br>Sodium atom loses one electron from M shell to form Na⁺ cation with configuration 2, 8. Chlorine atom gains one electron in M shell to form Cl⁻ anion with configuration 2, 8, 8. Both ions attain stable noble gas configuration.</div><div class="point"><strong>Step 3: Ionic Bond Formation (1 mark)</strong><br>Na⁺ and Cl⁻ ions are oppositely charged and attract each other by strong electrostatic forces to form sodium chloride (NaCl). It exists as aggregates of ions, not molecules.</div>`
-        },
-        {
-          marks: 5,
-          question: "Describe the structure of an atom and explain how electronic configuration determines chemical properties.",
-          answer: `<div class="section"><h5>1. Atomic Structure (1 mark)</h5><p>An atom consists of a central nucleus containing protons and neutrons, surrounded by electrons arranged in shells K, L, M, N at different energy levels.</p></div><div class="section"><h5>2. Electronic Configuration (1½ marks)</h5><p>Electrons are distributed in shells according to 2n² formula. K shell holds maximum 2, L shell 8, M shell 18 electrons. The outermost shell (valence shell) determines chemical properties.</p></div><div class="section"><h5>3. Chemical Properties (1½ marks)</h5><p>Elements with similar valence electron configuration show similar chemical properties. Noble gases have complete outer shells (8 electrons) and are chemically inert. Metals tend to lose electrons while non-metals gain electrons to achieve stable configuration.</p></div><div class="section"><h5>4. Example (1 mark)</h5><p>Sodium (2,8,1) and Potassium (2,8,8,1) both have 1 valence electron, hence both are reactive metals that form +1 ions. Chlorine (2,8,7) and Fluorine (2,7) both need 1 electron, hence both form -1 ions.</p></div>`
-        }
-      ]
-    }
-  }
-};
-
-// Initialize empty data for other chapters
-for (let ch = 1; ch <= 10; ch++) {
-  if (ch !== 7) chapterData[ch] = {};
-  const start = (ch - 1) * 10 + 1;
-  for (let p = start; p < start + 10; p++) {
-    if (ch !== 7 || p !== 61) {
-      chapterData[ch][p] = { mcqData: [], notesData: [], qaData: [] };
-    }
-  }
-}
-
-let pageScores = JSON.parse(localStorage.getItem('pageScores')) || {};
-let currentFilter = 'all';
-
-function updatePages() {
-  const ch = document.getElementById('chapterSelect').value;
-  currentChapter = ch;
-  const pageSelect = document.getElementById('pageSelect');
-  pageSelect.innerHTML = '<option value="">Select Page</option>';
-  clearAllContent();
-  
-  if (ch && chapterData[ch]) {
-    const pages = Object.keys(chapterData[ch]).sort((a,b) => parseInt(a) - parseInt(b));
-    pages.forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = p;
-      opt.textContent = `Page ${p}`;
-      pageSelect.appendChild(opt);
-    });
-    pageSelect.disabled = false;
-  }
-}
-
-function clearAllContent() {
-  const msg = '<p style="text-align:center; padding:40px; color:#666;">Select a chapter and page</p>';
-  document.getElementById('mcqContent').innerHTML = msg;
-  document.getElementById('notesContent').innerHTML = msg;
-  document.getElementById('qaContent').innerHTML = msg;
-}
-
-function loadPage() {
-  const pg = document.getElementById('pageSelect').value;
-  currentPage = pg;
-  clearAllContent();
-  
-  if (currentChapter && currentPage) {
-    const data = chapterData[currentChapter]?.[currentPage];
-    if (data) {
-      if (data.mcqData?.length) renderMCQ(data.mcqData);
-      else document.getElementById('mcqContent').innerHTML = '<p style="text-align:center; padding:40px; color:#666;">No MCQs available yet</p>';
-      
-      if (data.notesData?.length) renderNotes(data.notesData);
-      else document.getElementById('notesContent').innerHTML = '<p style="text-align:center; padding:40px; color:#666;">No notes available yet</p>';
-      
-      if (data.qaData?.length) renderQA(data.qaData);
-      else document.getElementById('qaContent').innerHTML = '<p style="text-align:center; padding:40px; color:#666;">No Q&A available yet</p>';
-    }
-  }
-}
-
-function renderMCQ(mcqs) {
-  const pageKey = `${currentChapter}-${currentPage}`;
-  const score = pageScores[pageKey] || 0;
-  let html = `<div class="score-display"><span>Score: ${score}/${mcqs.length}</span><button class="reset-score-btn" onclick="resetScore()">Reset Score</button></div>`;
-  html += `<div class="question-count">Questions: ${mcqs.length}</div>`;
-  
-  mcqs.forEach((q, idx) => {
-    const fullQuestion = `Question:\n${q.question}\n\nOptions:\n${q.options.join('\n')}`;
-    html += `<div class="question-item">
-      <div class="question-header">
-        <div class="question-number">Q${idx + 1}</div>
-        <button class="chatgpt-btn" onclick="openAI(\`${escapeForJS(fullQuestion)}\`)">ChatGPT</button>
-      </div>
-      <div class="question-text">${q.question}</div>
-      <div class="options">`;
-    
-    q.options.forEach(opt => {
-      const letter = opt.charAt(0);
-      html += `<div class="option" onclick="checkAnswer(this, '${q.correct}', '${letter}')">${opt}</div>`;
-    });
-    
-    html += `</div>
-      <div class="answer-display" id="answer-${idx}">
-        <strong>Correct Answer:</strong> ${q.options.find(o => o.startsWith(q.correct))}
-      </div>
-      <div class="hint-display" id="hint-${idx}">
-        <strong>💡 Hint:</strong> ${q.hint || "No hint available"}
-      </div>
-      <div class="button-group">
-        <button class="btn btn-answer" onclick="toggleAnswer(${idx})">Show Answer</button>
-        <button class="btn btn-hint" onclick="toggleHint(${idx})">Show Hint</button>
-      </div>
-    </div>`;
-  });
-  
-  document.getElementById('mcqContent').innerHTML = html;
-}
-
-function toggleAnswer(idx) {
-  const box = document.getElementById(`answer-${idx}`);
-  const btn = event.target;
-  if (box.classList.contains('show')) {
-    box.classList.remove('show');
-    btn.textContent = 'Show Answer';
-  } else {
-    box.classList.add('show');
-    btn.textContent = 'Hide Answer';
-  }
-}
-
-function toggleHint(idx) {
-  const box = document.getElementById(`hint-${idx}`);
-  const btn = event.target;
-  if (box.classList.contains('show')) {
-    box.classList.remove('show');
-    btn.textContent = 'Show Hint';
-  } else {
-    box.classList.add('show');
-    btn.textContent = 'Hide Hint';
-  }
-}
-
-function renderNotes(notes) {
-  let html = `<div class="notes-title">📚 Chapter ${currentChapter} Page ${currentPage}</div>`;
-  notes.forEach(note => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = note.content;
-    const text = tempDiv.textContent.trim();
-    const noteText = `${note.heading}\n\n${text}`;
-    html += `<div class="note-segment"><button class="ai-btn" onclick="openAI(\`${escapeForJS(noteText)}\`)">AI</button><div class="segment-heading">${note.heading}</div>${note.content}</div>`;
-  });
-  document.getElementById('notesContent').innerHTML = html;
-}
-
-function renderQA(qas) {
-  let html = `<p style="text-align:center; color:#666; margin-bottom:20px; font-size:14.04px;">Chapter ${currentChapter} Page ${currentPage} | Total: ${qas.length} Questions</p>`;
-  qas.forEach((qa, idx) => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = qa.answer;
-    const cleanAnswer = tempDiv.textContent.trim();
-    const qaText = `Question:\n${qa.question}\n\nAnswer:\n${cleanAnswer}`;
-    const markClass = `mark-${qa.marks}-item`;
-    html += `<div class="qa-item ${markClass}" data-mark="${qa.marks}"><button class="ai-btn" onclick="openAI(\`${escapeForJS(qaText)}\`)">AI</button><div class="qa-question"><span class="qa-question-number">Q${idx + 1}</span>${qa.question}<span class="mark-badge mark-${qa.marks}">${qa.marks} Mark${qa.marks > 1 ? 's' : ''}</span></div><div class="qa-answer-section"><span class="qa-answer-label">✍️ Answer:</span><div class="answer-${qa.marks}mark">${qa.answer}</div></div></div>`;
-  });
-  document.getElementById('qaContent').innerHTML = html;
-}
-
-function checkAnswer(el, correct, selected) {
-  if (el.classList.contains('selected')) return;
-  el.closest('.question-item').querySelectorAll('.option').forEach(o => o.style.pointerEvents = 'none');
-  el.classList.add('selected');
-  if (selected === correct) {
-    el.classList.add('correct');
-    updateScore(1);
-  } else {
-    el.classList.add('wrong');
-  }
-}
-
-function updateScore(points) {
-  const key = `${currentChapter}-${currentPage}`;
-  pageScores[key] = (pageScores[key] || 0) + points;
-  localStorage.setItem('pageScores', JSON.stringify(pageScores));
-  const scoreDisplay = document.querySelector('.score-display span');
-  if (scoreDisplay) {
-    const total = chapterData[currentChapter][currentPage].mcqData.length;
-    scoreDisplay.textContent = `Score: ${pageScores[key]}/${total}`;
-  }
-}
-
-function resetScore() {
-  const key = `${currentChapter}-${currentPage}`;
-  pageScores[key] = 0;
-  localStorage.setItem('pageScores', JSON.stringify(pageScores));
-  loadPage();
-}
-
-function openAI(text) {
-  const encoded = encodeURIComponent(text);
-  window.open(`https://chat.openai.com/?q=${encoded}`, '_blank');
-}
-
-function escapeForJS(text) {
-  return text.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$').replace(/\n/g, '\\n');
-}
-
-function switchView(view) {
-  document.getElementById('mcqMode').style.display = view === 'mcq' ? 'block' : 'none';
-  document.getElementById('notesMode').style.display = view === 'notes' ? 'block' : 'none';
-  document.getElementById('qaMode').style.display = view === 'qa' ? 'block' : 'none';
-  document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-}
-
-function filterByMark(mark) {
-  currentFilter = mark;
-  document.querySelectorAll('.mark-filter-btn').forEach(btn => btn.classList.remove('active'));
-  if (mark === 'all') {
-    document.querySelector('.filter-all').classList.add('active');
-  } else {
-    document.querySelector(`.filter-${mark}`).classList.add('active');
-  }
-  document.querySelectorAll('.qa-item').forEach(item => {
-    if (mark === 'all') {
-      item.style.display = 'block';
-    } else {
-      const itemMark = item.getAttribute('data-mark');
-      item.style.display = itemMark == mark ? 'block' : 'none';
-    }
-  });
-}
-</script>
 </body>
 </html>
-
