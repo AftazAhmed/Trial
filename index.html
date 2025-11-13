@@ -2,355 +2,1077 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BLOSSOM WORLD</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science & Social PPT Slides</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .page-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .page-btn {
+            padding: 10px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: white;
+        }
+
+        .slide-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            min-height: 600px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide-container.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .slide-intro {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .content-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .highlight {
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        .highlight-blue {
+            color: #2196F3;
+            font-weight: bold;
+        }
+
+        .diagram-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+        }
+
+        .charge-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .positive {
+            background: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
+            color: #2d5016;
+        }
+
+        .negative {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #8b0000;
+        }
+
+        .arrow {
+            font-size: 2em;
             color: #333;
         }
-        header {
-            background: linear-gradient(135deg, #5e72e4, #825ee4);
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+        .label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
         }
-        .main-container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .accordion-btn {
-            background: linear-gradient(135deg, #5e72e4, #825ee4);
-            color: #fff;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 1.3em;
-            font-weight: 600;
-            border-radius: 12px;
-            margin: 12px 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-        }
-        .accordion-btn:hover {
-            background: linear-gradient(135deg, #4c63d2, #7049d0);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .accordion-btn.active {
-            background: linear-gradient(135deg, #38ada9, #78e08f);
-        }
-        .panel {
-            padding: 0 18px;
-            background-color: #fff;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        .subject-btn {
-            background: #38ada9;
-            color: #fff;
-            cursor: pointer;
-            padding: 14px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 1.1em;
-            font-weight: 500;
+
+        .list-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
             border-radius: 8px;
-            margin: 10px 0;
-            transition: all 0.2s ease;
-        }
-        .subject-btn:hover {
-            background: #2d9b96;
-            transform: translateX(5px);
-        }
-        .subject-btn.active {
-            background: #ff9800;
-        }
-        .subject-content {
-            padding: 0 15px;
-            background-color: #f8f9fa;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            border-radius: 8px;
-            margin: 8px 0;
-        }
-        .content-area {
-            padding: 20px;
-            min-height: 100px;
-            color: #555;
+            border-left: 4px solid #e91e63;
             line-height: 1.7;
         }
-        .general-content {
+
+        .list-item strong {
+            color: #e91e63;
+        }
+
+        .subsection {
+            background: #fff3e0;
             padding: 20px;
-            background: #fff;
             border-radius: 10px;
-            margin: 10px 0;
-            min-height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .subsection-title {
+            font-size: 1.2em;
+            color: #ff6f00;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .friction-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        .friction-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-number {
+            text-align: right;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .empty-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: #999;
+            font-size: 1.5em;
+        }
+
+        /* Scrollbar Styling */
+        .page-selector::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .page-selector::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .page-selector::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .page-selector::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .slide-container {
+                padding: 20px;
+            }
+            
+            .slide-header {
+                font-size: 1.5em;
+            }
+            
+            .page-selector {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        BLOSSOM WORLD
-    </header>
-
-    <div class="main-container">
-        <!-- General Discussion and Implementation -->
-        <button class="accordion-btn">General Discussion and Implementation</button>
-        <div class="panel">
-            <div class="general-content" id="general-ppt-section">
-                <!-- PPT content will be inserted here directly -->
-            </div>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Science & Social Studies PPT</h1>
+            <p>Interactive Slide Presentation System</p>
         </div>
 
-        <!-- Class 1 -->
-        <button class="accordion-btn">Class 1</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content">
-                <div class="content-area">
-                    <!-- English microschedule content -->
+        <div class="navigation">
+            <button class="nav-btn" onclick="previousSlide()">⬅️ Previous</button>
+            <button class="nav-btn" onclick="nextSlide()">Next ➡️</button>
+            <button class="nav-btn" onclick="goToSlide(1)">🏠 First Slide</button>
+        </div>
+
+        <div class="page-selector" id="pageSelector">
+            <!-- Page buttons will be generated by JavaScript -->
+        </div>
+
+        <!-- Slide 1: Electric Charge -->
+        <div class="slide-container active" id="slide1">
+            <div class="slide-intro">
+                Have you ever noticed sparks coming out of loose plugs, switchboards, and other electrical appliances? During winter, you may have experienced a spark when rubbing or removing woollen or polyester clothes with a jerk. Lightning is also a type of spark that we see in the sky during the rainy season. Despite air being a poor conductor of electricity, lightning still occurs. To understand how this happens, we need to first grasp the concept of electric charges.
+            </div>
+
+            <div class="section">
+                <div class="section-title">⚡ ELECTRIC CHARGE</div>
+                <div class="content-box">
+                    We have learnt in an earlier chapter about the negative and positive charges inside an atom. The positively charged particles in an atom are called <span class="highlight">protons</span> while negatively charged particles are called <span class="highlight-blue">electrons</span>. The atom is said to be electrically neutral when it contains an equal number of electrons and protons which is usually the case. If, however, the charges are not balanced, the object will have an electric charge (positive charge if protons are more in number than electrons and negative charge if electrons are greater in number than protons).
+                </div>
+
+                <div class="diagram-container">
+                    <div style="text-align: center;">
+                        <div class="charge-circle positive">+</div>
+                        <div class="label">Positive</div>
+                    </div>
+                    <div class="arrow">➜</div>
+                    <div style="text-align: center;">
+                        <div class="charge-circle negative">-</div>
+                        <div class="label">Attract</div>
+                    </div>
+                </div>
+
+                <div class="diagram-container" style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);">
+                    <div style="text-align: center;">
+                        <div class="charge-circle positive">+</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="charge-circle positive">+</div>
+                    </div>
+                    <div class="label" style="font-size: 1.2em; font-weight: bold;">Repel</div>
+                    <div style="text-align: center;">
+                        <div class="charge-circle negative">-</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="charge-circle negative">-</div>
+                    </div>
+                    <div class="label" style="font-size: 1.2em; font-weight: bold;">Repel</div>
+                </div>
+
+                <div class="list-item">
+                    <strong>○ Like charges repel each other:</strong> If two objects having the same type of charge, that is, positive-positive or negative-negative are brought close together, they repel each other.
+                </div>
+
+                <div class="list-item">
+                    <strong>○ Unlike charges attract each other:</strong> If two objects having opposite charges (positive-negative or negative-positive) are brought close together, they attract each other.
                 </div>
             </div>
-            
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content">
-                <div class="content-area">
-                    <!-- Hindi/Bengali microschedule content -->
+
+            <div class="section">
+                <div class="section-title">🔋 Charging an Object</div>
+                <div class="content-box">
+                    Objects around us are electrically neutral as atoms have an equal number of positive and negative charges. Electrically neutral objects can be charged by the following methods.
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">Charging by Friction:</div>
+                    <div class="content-box">
+                        This is done by rubbing one material with another. Rubbing a glass rod with silk and an ebonite rod with wool are the most common examples. When a glass rod is rubbed with silk, the negative charges get transferred to the silk and the glass rod is left with positive charges. Similarly, when the ebonite rod is rubbed with fur, the negative charges go from the wool to the ebonite rod. Therefore, the ebonite rod becomes negatively charged and the wool is left with a positive charge.
+                    </div>
+
+                    <div class="friction-diagram">
+                        <div class="friction-item">
+                            <div style="font-size: 3em;">🔬</div>
+                            <div style="margin-top: 10px;"><strong>Glass rod</strong></div>
+                            <div style="color: #4CAF50;">+ Silk cloth</div>
+                        </div>
+                        <div class="friction-item">
+                            <div style="font-size: 3em;">⚫</div>
+                            <div style="margin-top: 10px;"><strong>Ebonite rod</strong></div>
+                            <div style="color: #ff6f00;">+ Wool/Fur</div>
+                        </div>
+                        <div class="friction-item">
+                            <div style="font-size: 3em;">🧀</div>
+                            <div style="margin-top: 10px;"><strong>Result</strong></div>
+                            <div style="color: #e91e63;">Charge Transfer</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content">
-                <div class="content-area">
-                    <!-- Maths microschedule content -->
-                </div>
-            </div>
-            
-            <button class="subject-btn">Science</button>
-            <div class="subject-content">
-                <div class="content-area">
-                    <!-- Science microschedule content -->
-                </div>
-            </div>
-            
-            <button class="subject-btn">Social</button>
-            <div class="subject-content">
-                <div class="content-area">
-                    <!-- Social microschedule content -->
-                </div>
-            </div>
-            
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content">
-                <div class="content-area">
-                    <!-- Computer microschedule content -->
-                </div>
+
+            <div class="page-number">Page 143 | Slide 1 of 100</div>
+        </div>
+
+        <!-- Slides 2-100: Empty containers -->
+        <div class="slide-container" id="slide2">
+            <div class="empty-slide">
+                📄 Slide 2 - Content Coming Soon
             </div>
         </div>
 
-        <!-- Class 2 -->
-        <button class="accordion-btn">Class 2</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide3">
+            <div class="empty-slide">
+                📄 Slide 3 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 3 -->
-        <button class="accordion-btn">Class 3</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide4">
+            <div class="empty-slide">
+                📄 Slide 4 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 4 -->
-        <button class="accordion-btn">Class 4</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide5">
+            <div class="empty-slide">
+                📄 Slide 5 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 5 -->
-        <button class="accordion-btn">Class 5</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide6">
+            <div class="empty-slide">
+                📄 Slide 6 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 6 -->
-        <button class="accordion-btn">Class 6</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide7">
+            <div class="empty-slide">
+                📄 Slide 7 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 7 -->
-        <button class="accordion-btn">Class 7</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide8">
+            <div class="empty-slide">
+                📄 Slide 8 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 8 -->
-        <button class="accordion-btn">Class 8</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide9">
+            <div class="empty-slide">
+                📄 Slide 9 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 9 -->
-        <button class="accordion-btn">Class 9</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide10">
+            <div class="empty-slide">
+                📄 Slide 10 - Content Coming Soon
+            </div>
         </div>
 
-        <!-- Class 10 -->
-        <button class="accordion-btn">Class 10</button>
-        <div class="panel">
-            <button class="subject-btn">English</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Hindi/Bengali</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Maths</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Science</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Social</button>
-            <div class="subject-content"><div class="content-area"></div></div>
-            <button class="subject-btn">Computer</button>
-            <div class="subject-content"><div class="content-area"></div></div>
+        <div class="slide-container" id="slide11">
+            <div class="empty-slide">
+                📄 Slide 11 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide12">
+            <div class="empty-slide">
+                📄 Slide 12 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide13">
+            <div class="empty-slide">
+                📄 Slide 13 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide14">
+            <div class="empty-slide">
+                📄 Slide 14 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide15">
+            <div class="empty-slide">
+                📄 Slide 15 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide16">
+            <div class="empty-slide">
+                📄 Slide 16 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide17">
+            <div class="empty-slide">
+                📄 Slide 17 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide18">
+            <div class="empty-slide">
+                📄 Slide 18 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide19">
+            <div class="empty-slide">
+                📄 Slide 19 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide20">
+            <div class="empty-slide">
+                📄 Slide 20 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide21">
+            <div class="empty-slide">
+                📄 Slide 21 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide22">
+            <div class="empty-slide">
+                📄 Slide 22 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide23">
+            <div class="empty-slide">
+                📄 Slide 23 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide24">
+            <div class="empty-slide">
+                📄 Slide 24 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide25">
+            <div class="empty-slide">
+                📄 Slide 25 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide26">
+            <div class="empty-slide">
+                📄 Slide 26 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide27">
+            <div class="empty-slide">
+                📄 Slide 27 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide28">
+            <div class="empty-slide">
+                📄 Slide 28 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide29">
+            <div class="empty-slide">
+                📄 Slide 29 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide30">
+            <div class="empty-slide">
+                📄 Slide 30 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide31">
+            <div class="empty-slide">
+                📄 Slide 31 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide32">
+            <div class="empty-slide">
+                📄 Slide 32 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide33">
+            <div class="empty-slide">
+                📄 Slide 33 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide34">
+            <div class="empty-slide">
+                📄 Slide 34 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide35">
+            <div class="empty-slide">
+                📄 Slide 35 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide36">
+            <div class="empty-slide">
+                📄 Slide 36 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide37">
+            <div class="empty-slide">
+                📄 Slide 37 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide38">
+            <div class="empty-slide">
+                📄 Slide 38 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide39">
+            <div class="empty-slide">
+                📄 Slide 39 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide40">
+            <div class="empty-slide">
+                📄 Slide 40 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide41">
+            <div class="empty-slide">
+                📄 Slide 41 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide42">
+            <div class="empty-slide">
+                📄 Slide 42 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide43">
+            <div class="empty-slide">
+                📄 Slide 43 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide44">
+            <div class="empty-slide">
+                📄 Slide 44 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide45">
+            <div class="empty-slide">
+                📄 Slide 45 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide46">
+            <div class="empty-slide">
+                📄 Slide 46 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide47">
+            <div class="empty-slide">
+                📄 Slide 47 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide48">
+            <div class="empty-slide">
+                📄 Slide 48 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide49">
+            <div class="empty-slide">
+                📄 Slide 49 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide50">
+            <div class="empty-slide">
+                📄 Slide 50 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide51">
+            <div class="empty-slide">
+                📄 Slide 51 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide52">
+            <div class="empty-slide">
+                📄 Slide 52 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide53">
+            <div class="empty-slide">
+                📄 Slide 53 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide54">
+            <div class="empty-slide">
+                📄 Slide 54 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide55">
+            <div class="empty-slide">
+                📄 Slide 55 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide56">
+            <div class="empty-slide">
+                📄 Slide 56 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide57">
+            <div class="empty-slide">
+                📄 Slide 57 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide58">
+            <div class="empty-slide">
+                📄 Slide 58 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide59">
+            <div class="empty-slide">
+                📄 Slide 59 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide60">
+            <div class="empty-slide">
+                📄 Slide 60 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide61">
+            <div class="empty-slide">
+                📄 Slide 61 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide62">
+            <div class="empty-slide">
+                📄 Slide 62 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide63">
+            <div class="empty-slide">
+                📄 Slide 63 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide64">
+            <div class="empty-slide">
+                📄 Slide 64 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide65">
+            <div class="empty-slide">
+                📄 Slide 65 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide66">
+            <div class="empty-slide">
+                📄 Slide 66 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide67">
+            <div class="empty-slide">
+                📄 Slide 67 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide68">
+            <div class="empty-slide">
+                📄 Slide 68 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide69">
+            <div class="empty-slide">
+                📄 Slide 69 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide70">
+            <div class="empty-slide">
+                📄 Slide 70 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide71">
+            <div class="empty-slide">
+                📄 Slide 71 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide72">
+            <div class="empty-slide">
+                📄 Slide 72 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide73">
+            <div class="empty-slide">
+                📄 Slide 73 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide74">
+            <div class="empty-slide">
+                📄 Slide 74 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide75">
+            <div class="empty-slide">
+                📄 Slide 75 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide76">
+            <div class="empty-slide">
+                📄 Slide 76 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide77">
+            <div class="empty-slide">
+                📄 Slide 77 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide78">
+            <div class="empty-slide">
+                📄 Slide 78 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide79">
+            <div class="empty-slide">
+                📄 Slide 79 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide80">
+            <div class="empty-slide">
+                📄 Slide 80 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide81">
+            <div class="empty-slide">
+                📄 Slide 81 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide82">
+            <div class="empty-slide">
+                📄 Slide 82 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide83">
+            <div class="empty-slide">
+                📄 Slide 83 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide84">
+            <div class="empty-slide">
+                📄 Slide 84 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide85">
+            <div class="empty-slide">
+                📄 Slide 85 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide86">
+            <div class="empty-slide">
+                📄 Slide 86 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide87">
+            <div class="empty-slide">
+                📄 Slide 87 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide88">
+            <div class="empty-slide">
+                📄 Slide 88 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide89">
+            <div class="empty-slide">
+                📄 Slide 89 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide90">
+            <div class="empty-slide">
+                📄 Slide 90 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide91">
+            <div class="empty-slide">
+                📄 Slide 91 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide92">
+            <div class="empty-slide">
+                📄 Slide 92 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide93">
+            <div class="empty-slide">
+                📄 Slide 93 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide94">
+            <div class="empty-slide">
+                📄 Slide 94 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide95">
+            <div class="empty-slide">
+                📄 Slide 95 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide96">
+            <div class="empty-slide">
+                📄 Slide 96 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide97">
+            <div class="empty-slide">
+                📄 Slide 97 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide98">
+            <div class="empty-slide">
+                📄 Slide 98 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide99">
+            <div class="empty-slide">
+                📄 Slide 99 - Content Coming Soon
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide100">
+            <div class="empty-slide">
+                📄 Slide 100 - Content Coming Soon
+            </div>
         </div>
     </div>
 
     <script>
-        // Accordion functionality for main class buttons
-        const accordionBtns = document.querySelectorAll('.accordion-btn');
-        accordionBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
+        let currentSlide = 1;
+        const totalSlides = 100;
+
+        // Generate page selector buttons
+        function generatePageButtons() {
+            const pageSelector = document.getElementById('pageSelector');
+            for (let i = 1; i <= totalSlides; i++) {
+                const button = document.createElement('button');
+                button.className = 'page-btn';
+                if (i === 1) button.classList.add('active');
+                button.textContent = i;
+                button.onclick = () => goToSlide(i);
+                pageSelector.appendChild(button);
+            }
+        }
+
+        function goToSlide(slideNumber) {
+            // Hide current slide
+            document.getElementById(`slide${currentSlide}`).classList.remove('active');
+            
+            // Remove active class from current page button
+            const buttons = document.querySelectorAll('.page-btn');
+            buttons[currentSlide - 1].classList.remove('active');
+            
+            // Show new slide
+            currentSlide = slideNumber;
+            document.getElementById(`slide${currentSlide}`).classList.add('active');
+            
+            // Add active class to new page button
+            buttons[currentSlide - 1].classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 1) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
         });
 
-        // Accordion functionality for subject buttons
-        const subjectBtns = document.querySelectorAll('.subject-btn');
-        subjectBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
-            });
-        });
+        // Initialize
+        generatePageButtons();
     </script>
 </body>
 </html>
