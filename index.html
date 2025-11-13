@@ -13,99 +13,114 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .controls-container {
+            width: 100%;
+            max-width: 1400px;
+            margin-bottom: 20px;
         }
 
         .header {
             text-align: center;
             color: white;
-            margin-bottom: 30px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            border-radius: 10px;
             backdrop-filter: blur(10px);
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 2em;
+            margin-bottom: 5px;
         }
 
         .navigation {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
 
         .nav-btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             background: white;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: #667eea;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            background: #667eea;
-            color: white;
-        }
-
-        .page-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .page-btn {
-            padding: 10px;
-            background: white;
-            border: 2px solid transparent;
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            color: #667eea;
+            color: #1e3c72;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background: #4CAF50;
+            color: white;
+        }
+
+        .page-selector {
+            display: flex;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            max-height: 120px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .page-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e3c72;
+            transition: all 0.3s ease;
+            min-width: 45px;
         }
 
         .page-btn:hover, .page-btn.active {
-            background: #667eea;
+            background: #4CAF50;
             color: white;
             border-color: white;
+            transform: scale(1.1);
+        }
+
+        /* PPT Slide Container - 16:9 Aspect Ratio */
+        .slide-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .slide-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
             background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            min-height: 600px;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4);
             display: none;
             animation: slideIn 0.5s ease;
+            overflow: hidden;
+            position: relative;
         }
 
         .slide-container.active {
@@ -115,57 +130,84 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
 
-        .slide-header {
-            font-size: 2em;
-            color: #667eea;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #667eea;
+        /* Slide Content Area */
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            padding: 3%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .slide-intro {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            line-height: 1.8;
-            color: #333;
-            text-align: justify;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 1.5em;
-            color: #4CAF50;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
-            border-radius: 8px;
+        /* Slide Title */
+        .slide-title {
+            font-size: 2.5vw;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2% 3%;
+            margin: -3% -3% 3% -3%;
             font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .content-box {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
+        /* Content Sections */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2%;
+            overflow: hidden;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3%;
+            flex: 1;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 2%;
+        }
+
+        .bullet-point {
+            font-size: 1.3vw;
+            line-height: 1.6;
+            color: #333;
+            padding: 1.5% 2%;
+            background: #f8f9fa;
             border-left: 4px solid #4CAF50;
-            margin-bottom: 20px;
-            line-height: 1.8;
-            text-align: justify;
+            border-radius: 5px;
+            margin-bottom: 1%;
         }
 
-        .highlight {
+        .bullet-point strong {
+            color: #e91e63;
+            font-size: 1.4vw;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+            padding: 2%;
+            border-radius: 8px;
+            font-size: 1.3vw;
+            line-height: 1.7;
+            color: #2d5016;
+            border: 2px solid #4CAF50;
+        }
+
+        .highlight-text {
             color: #e91e63;
             font-weight: bold;
         }
@@ -175,114 +217,106 @@
             font-weight: bold;
         }
 
-        .diagram-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 30px 0;
-            padding: 30px;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-radius: 15px;
-        }
-
-        .charge-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5em;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .positive {
-            background: linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%);
-            color: #2d5016;
-        }
-
-        .negative {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: #8b0000;
-        }
-
-        .arrow {
-            font-size: 2em;
-            color: #333;
-        }
-
-        .label {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        .list-item {
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #e91e63;
-            line-height: 1.7;
-        }
-
-        .list-item strong {
-            color: #e91e63;
-        }
-
-        .subsection {
-            background: #fff3e0;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .subsection-title {
-            font-size: 1.2em;
-            color: #ff6f00;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .friction-diagram {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            margin: 20px 0;
-            gap: 20px;
-        }
-
-        .friction-item {
+        /* Image Styling */
+        .image-box {
             text-align: center;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 2%;
+            background: #f8f9fa;
+            border-radius: 8px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .page-number {
-            text-align: right;
+        .slide-image {
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+        }
+
+        .image-caption {
+            font-size: 1.1vw;
             color: #666;
-            font-size: 0.9em;
-            margin-top: 20px;
+            margin-top: 1%;
+            font-style: italic;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.8vw;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 1.5%;
+            padding-bottom: 1%;
+            border-bottom: 3px solid #4CAF50;
+        }
+
+        /* Slide Number */
+        .slide-number {
+            position: absolute;
+            bottom: 2%;
+            right: 3%;
+            font-size: 1vw;
+            color: #999;
             font-weight: 600;
         }
 
+        /* Empty Slide */
         .empty-slide {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 400px;
-            color: #999;
-            font-size: 1.5em;
+            height: 100%;
+            color: #ccc;
+            font-size: 2vw;
+            flex-direction: column;
+            gap: 2%;
         }
 
-        /* Scrollbar Styling */
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .slide-title {
+                font-size: 3.5vw;
+            }
+            .bullet-point {
+                font-size: 2vw;
+            }
+            .bullet-point strong {
+                font-size: 2.2vw;
+            }
+            .highlight-box {
+                font-size: 2vw;
+            }
+            .section-header {
+                font-size: 2.5vw;
+            }
+            .image-caption {
+                font-size: 1.8vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            .slide-title {
+                font-size: 4vw;
+            }
+            .bullet-point {
+                font-size: 2.5vw;
+            }
+            .bullet-point strong {
+                font-size: 2.8vw;
+            }
+        }
+
+        /* Scrollbar */
         .page-selector::-webkit-scrollbar {
-            width: 8px;
+            height: 6px;
         }
 
         .page-selector::-webkit-scrollbar-track {
@@ -294,727 +328,221 @@
             background: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
         }
-
-        .page-selector::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .slide-container {
-                padding: 20px;
-            }
-            
-            .slide-header {
-                font-size: 1.5em;
-            }
-            
-            .page-selector {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="controls-container">
         <div class="header">
-            <h1>📚 Science & Social Studies PPT</h1>
-            <p>Interactive Slide Presentation System</p>
+            <h1>📚 Science & Social Studies - Interactive Presentation</h1>
         </div>
 
         <div class="navigation">
             <button class="nav-btn" onclick="previousSlide()">⬅️ Previous</button>
             <button class="nav-btn" onclick="nextSlide()">Next ➡️</button>
             <button class="nav-btn" onclick="goToSlide(1)">🏠 First Slide</button>
+            <button class="nav-btn" onclick="toggleFullscreen()">🖥️ Fullscreen</button>
         </div>
 
         <div class="page-selector" id="pageSelector">
             <!-- Page buttons will be generated by JavaScript -->
         </div>
+    </div>
 
-        <!-- Slide 1: Electric Charge -->
+    <div class="slide-wrapper">
+        <!-- Slide 1: Electric Charge - Title Slide -->
         <div class="slide-container active" id="slide1">
-            <div class="slide-intro">
-                Have you ever noticed sparks coming out of loose plugs, switchboards, and other electrical appliances? During winter, you may have experienced a spark when rubbing or removing woollen or polyester clothes with a jerk. Lightning is also a type of spark that we see in the sky during the rainy season. Despite air being a poor conductor of electricity, lightning still occurs. To understand how this happens, we need to first grasp the concept of electric charges.
-            </div>
-
-            <div class="section">
-                <div class="section-title">⚡ ELECTRIC CHARGE</div>
-                <div class="content-box">
-                    We have learnt in an earlier chapter about the negative and positive charges inside an atom. The positively charged particles in an atom are called <span class="highlight">protons</span> while negatively charged particles are called <span class="highlight-blue">electrons</span>. The atom is said to be electrically neutral when it contains an equal number of electrons and protons which is usually the case. If, however, the charges are not balanced, the object will have an electric charge (positive charge if protons are more in number than electrons and negative charge if electrons are greater in number than protons).
-                </div>
-
-                <div class="diagram-container">
-                    <div style="text-align: center;">
-                        <div class="charge-circle positive">+</div>
-                        <div class="label">Positive</div>
+            <div class="slide-content">
+                <div class="slide-title">⚡ ELECTRIC CHARGE</div>
+                <div class="content-area">
+                    <div class="highlight-box" style="font-size: 1.5vw; text-align: center; padding: 3%;">
+                        <strong>Understanding Electric Sparks & Lightning</strong>
+                        <p style="margin-top: 2%; line-height: 1.8;">
+                            Why do we see sparks from electrical appliances?<br>
+                            How does lightning occur despite air being a poor conductor?<br>
+                            Let's explore the concept of electric charges!
+                        </p>
                     </div>
-                    <div class="arrow">➜</div>
-                    <div style="text-align: center;">
-                        <div class="charge-circle negative">-</div>
-                        <div class="label">Attract</div>
-                    </div>
-                </div>
-
-                <div class="diagram-container" style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);">
-                    <div style="text-align: center;">
-                        <div class="charge-circle positive">+</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div class="charge-circle positive">+</div>
-                    </div>
-                    <div class="label" style="font-size: 1.2em; font-weight: bold;">Repel</div>
-                    <div style="text-align: center;">
-                        <div class="charge-circle negative">-</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div class="charge-circle negative">-</div>
-                    </div>
-                    <div class="label" style="font-size: 1.2em; font-weight: bold;">Repel</div>
-                </div>
-
-                <div class="list-item">
-                    <strong>○ Like charges repel each other:</strong> If two objects having the same type of charge, that is, positive-positive or negative-negative are brought close together, they repel each other.
-                </div>
-
-                <div class="list-item">
-                    <strong>○ Unlike charges attract each other:</strong> If two objects having opposite charges (positive-negative or negative-positive) are brought close together, they attract each other.
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-title">🔋 Charging an Object</div>
-                <div class="content-box">
-                    Objects around us are electrically neutral as atoms have an equal number of positive and negative charges. Electrically neutral objects can be charged by the following methods.
-                </div>
-
-                <div class="subsection">
-                    <div class="subsection-title">Charging by Friction:</div>
-                    <div class="content-box">
-                        This is done by rubbing one material with another. Rubbing a glass rod with silk and an ebonite rod with wool are the most common examples. When a glass rod is rubbed with silk, the negative charges get transferred to the silk and the glass rod is left with positive charges. Similarly, when the ebonite rod is rubbed with fur, the negative charges go from the wool to the ebonite rod. Therefore, the ebonite rod becomes negatively charged and the wool is left with a positive charge.
-                    </div>
-
-                    <div class="friction-diagram">
-                        <div class="friction-item">
-                            <div style="font-size: 3em;">🔬</div>
-                            <div style="margin-top: 10px;"><strong>Glass rod</strong></div>
-                            <div style="color: #4CAF50;">+ Silk cloth</div>
+                    <div class="two-column">
+                        <div class="column">
+                            <div class="bullet-point">
+                                <strong>Protons:</strong> Positively charged particles
+                            </div>
+                            <div class="bullet-point">
+                                <strong>Electrons:</strong> Negatively charged particles
+                            </div>
+                            <div class="bullet-point">
+                                <strong>Neutral Atom:</strong> Equal protons & electrons
+                            </div>
                         </div>
-                        <div class="friction-item">
-                            <div style="font-size: 3em;">⚫</div>
-                            <div style="margin-top: 10px;"><strong>Ebonite rod</strong></div>
-                            <div style="color: #ff6f00;">+ Wool/Fur</div>
-                        </div>
-                        <div class="friction-item">
-                            <div style="font-size: 3em;">🧀</div>
-                            <div style="margin-top: 10px;"><strong>Result</strong></div>
-                            <div style="color: #e91e63;">Charge Transfer</div>
+                        <div class="column">
+                            <div class="bullet-point">
+                                ➕ <strong>Positive Charge:</strong> More protons than electrons
+                            </div>
+                            <div class="bullet-point">
+                                ➖ <strong>Negative Charge:</strong> More electrons than protons
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="slide-number">Slide 1 / 100</div>
             </div>
-
-            <div class="page-number">Page 143 | Slide 1 of 100</div>
         </div>
 
-        <!-- Slides 2-100: Empty containers -->
+        <!-- Slide 2: Charge Interactions -->
         <div class="slide-container" id="slide2">
-            <div class="empty-slide">
-                📄 Slide 2 - Content Coming Soon
+            <div class="slide-content">
+                <div class="slide-title">🔋 How Charges Interact</div>
+                <div class="content-area">
+                    <div class="two-column">
+                        <div class="column">
+                            <div class="section-header">Charge Behavior</div>
+                            <div class="bullet-point">
+                                <strong>Like Charges Repel</strong><br>
+                                ➕ ↔️ ➕ (Push apart)<br>
+                                ➖ ↔️ ➖ (Push apart)
+                            </div>
+                            <div class="bullet-point">
+                                <strong>Unlike Charges Attract</strong><br>
+                                ➕ ➡️⬅️ ➖ (Pull together)
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="image-box">
+                                <img src="1000023937.jpg" alt="Electric Charge Diagram" class="slide-image">
+                                <div class="image-caption">Fig. 1: Electric charge interactions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">Slide 2 / 100</div>
             </div>
         </div>
 
+        <!-- Slide 3: Charging by Friction -->
         <div class="slide-container" id="slide3">
-            <div class="empty-slide">
-                📄 Slide 3 - Content Coming Soon
+            <div class="slide-content">
+                <div class="slide-title">🧲 Charging an Object</div>
+                <div class="content-area">
+                    <div class="section-header">Charging by Friction</div>
+                    <div class="two-column">
+                        <div class="column">
+                            <div class="highlight-box">
+                                <strong>Method:</strong> Rubbing two materials together transfers electrons
+                            </div>
+                            <div class="bullet-point">
+                                <strong>Glass Rod + Silk:</strong><br>
+                                → Electrons move to silk<br>
+                                → Glass becomes ➕ positive
+                            </div>
+                            <div class="bullet-point">
+                                <strong>Ebonite Rod + Wool:</strong><br>
+                                → Electrons move to ebonite<br>
+                                → Ebonite becomes ➖ negative
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="image-box">
+                                <img src="1000023937.jpg" alt="Charging by Friction" class="slide-image">
+                                <div class="image-caption">Fig. 2: Charging by friction examples</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">Slide 3 / 100</div>
             </div>
         </div>
 
+        <!-- Slides 4-100: Empty containers -->
         <div class="slide-container" id="slide4">
-            <div class="empty-slide">
-                📄 Slide 4 - Content Coming Soon
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 4 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 4 / 100</div>
             </div>
         </div>
 
         <div class="slide-container" id="slide5">
-            <div class="empty-slide">
-                📄 Slide 5 - Content Coming Soon
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 5 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 5 / 100</div>
             </div>
         </div>
 
         <div class="slide-container" id="slide6">
-            <div class="empty-slide">
-                📄 Slide 6 - Content Coming Soon
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 6 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 6 / 100</div>
             </div>
         </div>
 
         <div class="slide-container" id="slide7">
-            <div class="empty-slide">
-                📄 Slide 7 - Content Coming Soon
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 7 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 7 / 100</div>
             </div>
         </div>
 
         <div class="slide-container" id="slide8">
-            <div class="empty-slide">
-                📄 Slide 8 - Content Coming Soon
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 8 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 8 / 100</div>
             </div>
         </div>
 
         <div class="slide-container" id="slide9">
-            <div class="empty-slide">
-                📄 Slide 9 - Content Coming Soon
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 9 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 9 / 100</div>
             </div>
         </div>
 
         <div class="slide-container" id="slide10">
-            <div class="empty-slide">
-                📄 Slide 10 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide11">
-            <div class="empty-slide">
-                📄 Slide 11 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide12">
-            <div class="empty-slide">
-                📄 Slide 12 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide13">
-            <div class="empty-slide">
-                📄 Slide 13 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide14">
-            <div class="empty-slide">
-                📄 Slide 14 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide15">
-            <div class="empty-slide">
-                📄 Slide 15 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide16">
-            <div class="empty-slide">
-                📄 Slide 16 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide17">
-            <div class="empty-slide">
-                📄 Slide 17 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide18">
-            <div class="empty-slide">
-                📄 Slide 18 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide19">
-            <div class="empty-slide">
-                📄 Slide 19 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide20">
-            <div class="empty-slide">
-                📄 Slide 20 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide21">
-            <div class="empty-slide">
-                📄 Slide 21 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide22">
-            <div class="empty-slide">
-                📄 Slide 22 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide23">
-            <div class="empty-slide">
-                📄 Slide 23 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide24">
-            <div class="empty-slide">
-                📄 Slide 24 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide25">
-            <div class="empty-slide">
-                📄 Slide 25 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide26">
-            <div class="empty-slide">
-                📄 Slide 26 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide27">
-            <div class="empty-slide">
-                📄 Slide 27 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide28">
-            <div class="empty-slide">
-                📄 Slide 28 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide29">
-            <div class="empty-slide">
-                📄 Slide 29 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide30">
-            <div class="empty-slide">
-                📄 Slide 30 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide31">
-            <div class="empty-slide">
-                📄 Slide 31 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide32">
-            <div class="empty-slide">
-                📄 Slide 32 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide33">
-            <div class="empty-slide">
-                📄 Slide 33 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide34">
-            <div class="empty-slide">
-                📄 Slide 34 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide35">
-            <div class="empty-slide">
-                📄 Slide 35 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide36">
-            <div class="empty-slide">
-                📄 Slide 36 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide37">
-            <div class="empty-slide">
-                📄 Slide 37 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide38">
-            <div class="empty-slide">
-                📄 Slide 38 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide39">
-            <div class="empty-slide">
-                📄 Slide 39 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide40">
-            <div class="empty-slide">
-                📄 Slide 40 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide41">
-            <div class="empty-slide">
-                📄 Slide 41 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide42">
-            <div class="empty-slide">
-                📄 Slide 42 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide43">
-            <div class="empty-slide">
-                📄 Slide 43 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide44">
-            <div class="empty-slide">
-                📄 Slide 44 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide45">
-            <div class="empty-slide">
-                📄 Slide 45 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide46">
-            <div class="empty-slide">
-                📄 Slide 46 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide47">
-            <div class="empty-slide">
-                📄 Slide 47 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide48">
-            <div class="empty-slide">
-                📄 Slide 48 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide49">
-            <div class="empty-slide">
-                📄 Slide 49 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide50">
-            <div class="empty-slide">
-                📄 Slide 50 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide51">
-            <div class="empty-slide">
-                📄 Slide 51 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide52">
-            <div class="empty-slide">
-                📄 Slide 52 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide53">
-            <div class="empty-slide">
-                📄 Slide 53 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide54">
-            <div class="empty-slide">
-                📄 Slide 54 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide55">
-            <div class="empty-slide">
-                📄 Slide 55 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide56">
-            <div class="empty-slide">
-                📄 Slide 56 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide57">
-            <div class="empty-slide">
-                📄 Slide 57 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide58">
-            <div class="empty-slide">
-                📄 Slide 58 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide59">
-            <div class="empty-slide">
-                📄 Slide 59 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide60">
-            <div class="empty-slide">
-                📄 Slide 60 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide61">
-            <div class="empty-slide">
-                📄 Slide 61 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide62">
-            <div class="empty-slide">
-                📄 Slide 62 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide63">
-            <div class="empty-slide">
-                📄 Slide 63 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide64">
-            <div class="empty-slide">
-                📄 Slide 64 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide65">
-            <div class="empty-slide">
-                📄 Slide 65 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide66">
-            <div class="empty-slide">
-                📄 Slide 66 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide67">
-            <div class="empty-slide">
-                📄 Slide 67 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide68">
-            <div class="empty-slide">
-                📄 Slide 68 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide69">
-            <div class="empty-slide">
-                📄 Slide 69 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide70">
-            <div class="empty-slide">
-                📄 Slide 70 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide71">
-            <div class="empty-slide">
-                📄 Slide 71 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide72">
-            <div class="empty-slide">
-                📄 Slide 72 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide73">
-            <div class="empty-slide">
-                📄 Slide 73 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide74">
-            <div class="empty-slide">
-                📄 Slide 74 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide75">
-            <div class="empty-slide">
-                📄 Slide 75 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide76">
-            <div class="empty-slide">
-                📄 Slide 76 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide77">
-            <div class="empty-slide">
-                📄 Slide 77 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide78">
-            <div class="empty-slide">
-                📄 Slide 78 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide79">
-            <div class="empty-slide">
-                📄 Slide 79 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide80">
-            <div class="empty-slide">
-                📄 Slide 80 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide81">
-            <div class="empty-slide">
-                📄 Slide 81 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide82">
-            <div class="empty-slide">
-                📄 Slide 82 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide83">
-            <div class="empty-slide">
-                📄 Slide 83 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide84">
-            <div class="empty-slide">
-                📄 Slide 84 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide85">
-            <div class="empty-slide">
-                📄 Slide 85 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide86">
-            <div class="empty-slide">
-                📄 Slide 86 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide87">
-            <div class="empty-slide">
-                📄 Slide 87 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide88">
-            <div class="empty-slide">
-                📄 Slide 88 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide89">
-            <div class="empty-slide">
-                📄 Slide 89 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide90">
-            <div class="empty-slide">
-                📄 Slide 90 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide91">
-            <div class="empty-slide">
-                📄 Slide 91 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide92">
-            <div class="empty-slide">
-                📄 Slide 92 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide93">
-            <div class="empty-slide">
-                📄 Slide 93 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide94">
-            <div class="empty-slide">
-                📄 Slide 94 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide95">
-            <div class="empty-slide">
-                📄 Slide 95 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide96">
-            <div class="empty-slide">
-                📄 Slide 96 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide97">
-            <div class="empty-slide">
-                📄 Slide 97 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide98">
-            <div class="empty-slide">
-                📄 Slide 98 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide99">
-            <div class="empty-slide">
-                📄 Slide 99 - Content Coming Soon
-            </div>
-        </div>
-
-        <div class="slide-container" id="slide100">
-            <div class="empty-slide">
-                📄 Slide 100 - Content Coming Soon
-            </div>
-        </div>
+            <div class="slide-content">
+                <div class="empty-slide">
+                    <div>📄</div>
+                    <div>Slide 10 - Content Coming Soon</div>
+                </div>
+                <div class="slide-number">Slide 10 / 100</div>
+            </div>
+        </div>
+
+        <!-- Continuing with slides 11-100 -->
+        <script>
+            // Generate empty slides 11-100
+            const slideWrapper = document.querySelector('.slide-wrapper');
+            for (let i = 11; i <= 100; i++) {
+                const slide = document.createElement('div');
+                slide.className = 'slide-container';
+                slide.id = `slide${i}`;
+                slide.innerHTML = `
+                    <div class="slide-content">
+                        <div class="empty-slide">
+                            <div>📄</div>
+                            <div>Slide ${i} - Content Coming Soon</div>
+                        </div>
+                        <div class="slide-number">Slide ${i} / 100</div>
+                    </div>
+                `;
+                slideWrapper.appendChild(slide);
+            }
+        </script>
     </div>
 
     <script>
@@ -1048,6 +576,7 @@
             
             // Add active class to new page button
             buttons[currentSlide - 1].classList.add('active');
+            buttons[currentSlide - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1065,10 +594,36 @@
             }
         }
 
+        function toggleFullscreen() {
+            const slideWrapper = document.querySelector('.slide-wrapper');
+            if (!document.fullscreenElement) {
+                slideWrapper.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+            if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+            if (e.key === 'Home') {
+                goToSlide(1);
+            }
+            if (e.key === 'End') {
+                goToSlide(totalSlides);
+            }
         });
 
         // Initialize
