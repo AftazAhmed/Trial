@@ -5,52 +5,107 @@
     <title>BLOSSOM WORLD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f6f9fc;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            color: #333;
         }
         header {
-            background: #6a89cc;
+            background: linear-gradient(135deg, #5e72e4, #825ee4);
             color: #fff;
-            padding: 32px;
+            padding: 40px 20px;
             text-align: center;
-            font-size: 2rem;
-            letter-spacing: 0.12em;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .container {
-            background: #fff;
-            border-radius: 12px;
-            margin: 22px auto;
-            padding: 18px 22px;
-            box-shadow: 0 2px 10px rgba(88,108,124,0.10);
-            max-width: 850px;
+        .main-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
-        .section-title {
-            font-size: 1.22em;
-            margin-bottom: 13px;
-            color: #41729f;
+        .accordion-btn {
+            background: linear-gradient(135deg, #5e72e4, #825ee4);
+            color: #fff;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.3em;
             font-weight: 600;
+            border-radius: 12px;
+            margin: 12px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
         }
-        .subject-micro {
-            margin: 7px 0 16px 0;
+        .accordion-btn:hover {
+            background: linear-gradient(135deg, #4c63d2, #7049d0);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .subject-name {
+        .accordion-btn.active {
+            background: linear-gradient(135deg, #38ada9, #78e08f);
+        }
+        .panel {
+            padding: 0 18px;
+            background-color: #fff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .subject-btn {
+            background: #38ada9;
+            color: #fff;
+            cursor: pointer;
+            padding: 14px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1em;
             font-weight: 500;
-            color: #38ada9;
-            margin-bottom: 6px;
+            border-radius: 8px;
+            margin: 10px 0;
+            transition: all 0.2s ease;
         }
-        .ppt-container {
-            background: #f1f4f7;
-            padding: 15px;
-            margin-top: 12px;
+        .subject-btn:hover {
+            background: #2d9b96;
+            transform: translateX(5px);
+        }
+        .subject-btn.active {
+            background: #ff9800;
+        }
+        .subject-content {
+            padding: 0 15px;
+            background-color: #f8f9fa;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        .content-area {
+            padding: 20px;
+            min-height: 100px;
+            color: #555;
+            line-height: 1.7;
+        }
+        .general-content {
+            padding: 20px;
+            background: #fff;
             border-radius: 10px;
-            min-height: 90px;
-        }
-        .ppt-title {
-            font-size: 1.08em;
-            font-weight: 500;
-            color: #b71540;
+            margin: 10px 0;
+            min-height: 150px;
         }
     </style>
 </head>
@@ -58,79 +113,244 @@
     <header>
         BLOSSOM WORLD
     </header>
-    <div class="container" id="general-section">
-        <div class="section-title">General Action Plans</div>
-        <div>
-            <!-- Space for action plans, school-wide notes, announcements -->
+
+    <div class="main-container">
+        <!-- General Discussion and Implementation -->
+        <button class="accordion-btn">General Discussion and Implementation</button>
+        <div class="panel">
+            <div class="general-content" id="general-ppt-section">
+                <!-- PPT content will be inserted here directly -->
+            </div>
         </div>
-        <div class="ppt-container" id="ppt-section">
-            <div class="ppt-title">PPT Area</div>
-            <!-- Future HTML PPTs will be filled in here -->
+
+        <!-- Class 1 -->
+        <button class="accordion-btn">Class 1</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content">
+                <div class="content-area">
+                    <!-- English microschedule content -->
+                </div>
+            </div>
+            
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content">
+                <div class="content-area">
+                    <!-- Hindi/Bengali microschedule content -->
+                </div>
+            </div>
+            
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content">
+                <div class="content-area">
+                    <!-- Maths microschedule content -->
+                </div>
+            </div>
+            
+            <button class="subject-btn">Science</button>
+            <div class="subject-content">
+                <div class="content-area">
+                    <!-- Science microschedule content -->
+                </div>
+            </div>
+            
+            <button class="subject-btn">Social</button>
+            <div class="subject-content">
+                <div class="content-area">
+                    <!-- Social microschedule content -->
+                </div>
+            </div>
+            
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content">
+                <div class="content-area">
+                    <!-- Computer microschedule content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Class 2 -->
+        <button class="accordion-btn">Class 2</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 3 -->
+        <button class="accordion-btn">Class 3</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 4 -->
+        <button class="accordion-btn">Class 4</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 5 -->
+        <button class="accordion-btn">Class 5</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 6 -->
+        <button class="accordion-btn">Class 6</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 7 -->
+        <button class="accordion-btn">Class 7</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 8 -->
+        <button class="accordion-btn">Class 8</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 9 -->
+        <button class="accordion-btn">Class 9</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+        </div>
+
+        <!-- Class 10 -->
+        <button class="accordion-btn">Class 10</button>
+        <div class="panel">
+            <button class="subject-btn">English</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Hindi/Bengali</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Maths</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Science</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Social</button>
+            <div class="subject-content"><div class="content-area"></div></div>
+            <button class="subject-btn">Computer</button>
+            <div class="subject-content"><div class="content-area"></div></div>
         </div>
     </div>
-    <!-- Classes 1 to 10: Microschedules and subjects -->
-    <!-- Repeat the following block for each class (1–10) -->
-    <!-- Example for classes 1 to 10 below: -->
-    <div class="container" id="class-1-section">
-        <div class="section-title">Class 1 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div><!-- Add schedules/actions here --></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div><!-- Add schedules/actions here --></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div><!-- Add schedules/actions here --></div></div>
-        <!-- Add more subjects as needed -->
-    </div>
-    <div class="container" id="class-2-section">
-        <div class="section-title">Class 2 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-3-section">
-        <div class="section-title">Class 3 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-4-section">
-        <div class="section-title">Class 4 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-5-section">
-        <div class="section-title">Class 5 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-6-section">
-        <div class="section-title">Class 6 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-7-section">
-        <div class="section-title">Class 7 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-8-section">
-        <div class="section-title">Class 8 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-9-section">
-        <div class="section-title">Class 9 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
-    <div class="container" id="class-10-section">
-        <div class="section-title">Class 10 Microschedules</div>
-        <div class="subject-micro"><div class="subject-name">Maths</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">Science</div><div></div></div>
-        <div class="subject-micro"><div class="subject-name">English</div><div></div></div>
-    </div>
+
+    <script>
+        // Accordion functionality for main class buttons
+        const accordionBtns = document.querySelectorAll('.accordion-btn');
+        accordionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Accordion functionality for subject buttons
+        const subjectBtns = document.querySelectorAll('.subject-btn');
+        subjectBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
